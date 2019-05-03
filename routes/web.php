@@ -16,7 +16,11 @@ Auth::routes();
 Route::group(['prefix' => 'admin','middleware' => 'role:admin'], function () {
     Route::get('/dashboard', 'AdminController@index')->name('admin_dashboard');
 });
-Route::get('/dashboard', 'DashBoardController@index')->name('dashboard');
+Route::group(['prefix' => 'user','middleware' => 'auth'], function () {
+    Route::get('/dashboard', 'UserController@dashboard')->name('user_dashboard');
+    Route::get('/profile', 'UserController@profile')->name('user_profile');
+    Route::post('/avt', 'UserController@changeAvt')->name('user_avt');
+});
 ///////////////
 Route::get('/', 'HomeController@index')->name('home');
     Route::get('/{category_slug}', 'CategoryController@index');

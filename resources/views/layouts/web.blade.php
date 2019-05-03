@@ -55,8 +55,11 @@
                             </li>
                             @endforeach
                             @guest
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <li class="nav-item ml-2">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a class="btn btn-outline-dark" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="btn btn-outline-dark" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    </div>
                                 </li>
                                 {{-- @if (Route::has('register'))
                                     <li class="nav-item">
@@ -64,9 +67,9 @@
                                     </li>
                                 @endif --}}
                             @else
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('dashboard')}}">
-                                        {{ Auth::user()->name }} <span class="caret"></span>
+                                <li class="nav-item mx-2">
+                                    <a class="btn btn-outline-dark" href="{{ route('user_dashboard')}}">
+                                        {{ Auth::user()->fname }} <span class="caret"></span>
                                     </a>
     
                                     {{-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
