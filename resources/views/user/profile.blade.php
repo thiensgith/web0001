@@ -32,9 +32,9 @@
                                 <div class="modal-body">
                                             @csrf
                                             <div class="custom-file">
-                                                <input type="file" name="avatar" class="custom-file-input  @error('avatar') is-invalid @enderror" id="customFile">
+                                                <input type="file" name="uploadavatar" class="custom-file-input  @error('avatar') is-invalid @enderror" id="customFile">
                                                 <label class="custom-file-label" for="customFile">Choose file</label>
-                                                @error('avatar')
+                                                @error('uploadavatar')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Image;
+use Auth;
 class UserController extends Controller
 {
     /**
@@ -35,19 +37,16 @@ class UserController extends Controller
 
     public function changeAvt(Request $request)
     {
-        if ($request->hasFile('avatar')) {
-            $file = $request->avatar;
-                $request->validate([
-                    'avatar' => 'image|required'
-                ]);
-        $imagename = time().rand(0,1000).'.'.$file->getClientOriginalExtension();
-        $avatar = $request->user();
-        $avatar->avatar = $imagename;
-        $avatar->save();
-
-        $file->move(public_path('assets/user_avatar'),$imagename);
-
-        return redirect()->back();
-        } else abort(415,'Unsupported Media Type');
+        if ($request->hasFile('uploadavatar')) {
+            $file = $request->uploadavatar;
+            $request->validate([
+                'uploadavatar' => 'image|required'
+            ]);
+            $imagename = time().rand(0,1000).'.'.$file->getClientOriginalExtension();
+            $avatar = Image::make($file)->fit(300, 300)->encode('jpg')->save(public_path('assets/user_avatar/'.$imagename));
+            //Auth::user()->update(['avatar' => $imagename]);
+            return $request->user()->image;
+            //return redirect()->back();
+        } else abort(403, "Errors");
     }
 }
