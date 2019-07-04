@@ -9,7 +9,7 @@
                     @foreach ($data as $item)
                     <li class="alert alert-light">
                         <a class="media alert-link" href="{{url()->current()."/".$item->plant_slug}}">
-                        <img class="align-self-center mr-3" height="128" width="128" src="{{$item->plant_image}}" alt="{{$item->plant_slug}}">
+                        <img class="align-self-center mr-3" height="128" width="128" src="{{asset('storage/sm_'.$item->plant_image)}}" alt="{{$item->plant_slug}}">
                             <div class="media-body">
                                 <h5 class="mb-0">{{$item->plant_name}}</h5>
                             </div>

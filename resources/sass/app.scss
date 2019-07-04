@@ -7,6 +7,9 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// Sidenav
+@import 'sidenav';
+
 .navbar-laravel {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -16,3 +19,28 @@
     outline: none !important;
     box-shadow: none !important;
   }
+
+input:focus, input:active,
+select:focus, select:active{
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+// Dropzone Override
+.dropzone {
+	background: $dark !important;
+}
+.dropzone .dz-message {
+	color: $light !important;
+}
+.dropzone .dz-details {
+	background: $light !important;
+	color: $dark !important;
+}
+.dropzone .dz-progress{
+	display: none !important;
+}
+.dropzone .dz-remove{
+  background: $danger !important;
+  color: $light !important;
+}

@@ -28,6 +28,19 @@
 </style>
 </head>
 <body>
+    @guest
+    @else
+    @if (Auth::user()->roles()->where('name', 'admin')->count())
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="{{route('admin.index')}}">Dashboard</a>
+        <a href="{{route('admin.users.index')}}">Users</a>
+        <a href="{{route('admin.categories.index')}}">Categories</a>
+        <a href="{{route('admin.plants.index')}}">Plants</a>
+
+    </div>
+    @endif
+    @endguest
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
@@ -41,7 +54,14 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @guest
+                        @else
+                        @if (Auth::user()->roles()->where('name', 'admin')->count())
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-dark text-light" href="#" onclick="openNav()">Menu</a>
+                        </li>
+                        @endif
+                        @endguest
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -87,5 +107,18 @@
         </main>
     </div>
     @yield('script')
+    <script type="text/javascript">
+        /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+        function openNav() {
+          document.getElementById("mySidenav").style.width = "250px";
+          document.getElementById("app").style.marginLeft = "250px";
+        }
+
+        /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+        function closeNav() {
+          document.getElementById("mySidenav").style.width = "0";
+          document.getElementById("app").style.marginLeft = "0";
+        }
+    </script>
 </body>
 </html>

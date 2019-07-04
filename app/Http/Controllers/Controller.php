@@ -14,6 +14,6 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     public function __construct(){
         $categories = new Category;
-        return view()->share('navbar_data', $categories->all());
+        return view()->share('navbar_data', $categories->where('category_visible',1)->get());
     }
 }

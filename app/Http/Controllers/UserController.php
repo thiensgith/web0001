@@ -26,7 +26,7 @@ class UserController extends Controller
     public function dashboard(Request $request)
     {
         if ($request->user()->authorizeRoles('admin',true)) {
-            return redirect()->route('admin_dashboard');
+            return redirect()->route('admin.index');
         }
         return view('user.dashboard');
     }
@@ -44,9 +44,9 @@ class UserController extends Controller
             ]);
             $imagename = time().rand(0,1000).'.'.$file->getClientOriginalExtension();
             $avatar = Image::make($file)->fit(300, 300)->encode('jpg')->save(public_path('assets/user_avatar/'.$imagename));
-            //Auth::user()->update(['avatar' => $imagename]);
-            return $request->user()->image;
-            //return redirect()->back();
+            $request->user()->avatar = $imagename;
+            $request->user()->save();
+            return redirect()->back();
         } else abort(403, "Errors");
     }
 }

@@ -23,6 +23,21 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        return view('user.dashboard');
+        return view('user.admin.dashboard');
+    }
+
+    public function category()
+    {
+        return view('user.admin.categories.index');
+    }
+
+    public function user()
+    {
+        return view('user.admin.users.index');
+    }
+
+    public function plant()
+    {
+        return view('user.admin.plants.index');
     }
 }

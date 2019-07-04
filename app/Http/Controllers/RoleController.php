@@ -1,5 +1,5 @@
 <?php
-
+//NOT USE
 namespace App\Http\Controllers;
 
 use App\Role;

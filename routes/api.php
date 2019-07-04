@@ -16,3 +16,15 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group([
+	//'middleware' => 'role:admin',
+	'prefix' => '/v1',
+	'namespace' => 'Api\V1',
+	'as' => 'api.',
+], function () {
+	Route::resource('categories', 'CategoriesController', ['except' => ['create', 'edit']]);
+	Route::resource('users', 'UsersController', ['except' => ['create', 'edit']]);
+	Route::resource('plants', 'PlantsController', ['except' => ['create', 'edit']]);
+}
+);

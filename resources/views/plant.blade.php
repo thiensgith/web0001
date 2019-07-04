@@ -13,7 +13,7 @@
                 <a class="btn btn-outline-secondary" href="{{ route('home')}}">Coming soon</a>
                 </div>
                 <div class="col-md-6 p-lg-5 my-5">
-                    <img class="rounded"src="{{$data->plant_image}}" alt="Plant Image">
+                    <img class="rounded img-fluid img-thumbnail"src="{{asset('storage/lg_'.$data->plant_image)}}" alt="Plant Image">
                 </div>
             </div>
         </div>

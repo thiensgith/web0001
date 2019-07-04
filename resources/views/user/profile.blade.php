@@ -63,6 +63,9 @@
 
                             <dt class="col-sm-3">{{ __('Email')}}</dt>
                             <dd class="col-sm-9">{{ Auth::user()->email }}</dd>
+
+                            <dt class="col-sm-3">{{ __('user.role')}}</dt>
+                            <dd class="col-sm-9">{{ Auth::user()->roles()->first()->name }}</dd>
                         </dl>
                     </div>
                 </div>
