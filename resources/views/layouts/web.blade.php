@@ -29,50 +29,69 @@
     <style>
         body {
         background: url('/assets/images/default/home-background.jpeg');
-        background-size: cover;
+        background-size: 100% auto;
         background-repeat: no-repeat;   
         min-height: 100vh;
     }
+        .navbar-dark a
+        {
+            color: #000000;
+        }
+        .navbar-dark a:hover
+        {
+            color: #b3ffb3;
+            background: #5D8A4B;
+            transition: 0.4s;
+        }
+        .navbar-toggler {
+            font-size: 1.125rem;
+            line-height: 1;
+            background-color: #5D8A4B;
+            border: 1px solid #ffffff;
+            border-radius: 0.25rem;
+        }
     </style>
     @yield('style')
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
-            <div class="container">
-                    <a class="navbar-brand" href="{{ route('home')}}">{{ config('app.name', 'The Earth Garden') }}</a>
+        <nav class="navbar navbar-expand-lg pt-3">
+            <div class="container-fluid">
+                    <a class="col-md navbar-brand" href="{{ route('home')}}"><img src="{{asset("assets/images/default/brand.png")}}" alt="Brand"></a>
                     <button class="navbar-toggler" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div id="my-nav" class="collapse navbar-collapse">
-                        <ul class="navbar-nav mr-auto">
-                            
-                        </ul>
-                        <ul class="navbar-nav ml-auto">
-                            @foreach ($navbar_data as $item)
+                    <div id="my-nav" class="collapse navbar-collapse col-md-9">
+                        
+                        <ul class="navbar-nav navbar-dark mr-auto">
+                            {{-- 
+                             --}}
                             <li class="nav-item">
-                            <a href="{{route('home')."/".$item->category_slug}}" class="nav-link">{{$item->category_name}}</a>
+                                <a class="nav-link px-3 rounded-pill" href="/">HOME</a>
                             </li>
-                            @endforeach
-                            @guest
-                                <li class="nav-item ml-2">
-                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                    <a class="btn btn-outline-dark" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                    <a class="btn btn-outline-dark" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                    </div>
+                            <li class="nav-item">
+                                <a class="nav-link px-3 rounded-pill" href="{{route('categories')}}">PRODUCTS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3 rounded-pill" href="#">INSPIRATION</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav navbar-dark    ml-auto">
+                            {{-- @guest
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    
                                 </li>
-                                {{-- @if (Route::has('register'))
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                    </li>
-                                @endif --}}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
                             @else
-                                <li class="nav-item mx-2">
-                                    <a class="btn btn-outline-dark" href="{{ route('user_dashboard')}}">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('user_dashboard')}}">
                                         {{ Auth::user()->fname }} <span class="caret"></span>
                                     </a>
     
-                                    {{-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                            onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
@@ -82,11 +101,12 @@
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             @csrf
                                         </form>
-                                    </div> --}}
+                                    </div>
                                 </li>
-                            @endguest
+                            @endguest --}}
                         </ul>
                     </div>
+                    <div class="col-md-2"></div>
             </div>
         </nav>
         <main>

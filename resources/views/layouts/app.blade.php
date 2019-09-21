@@ -54,14 +54,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        @guest
-                        @else
-                        @if (Auth::user()->roles()->where('name', 'admin')->count())
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-dark text-light" href="#" onclick="openNav()">Menu</a>
-                        </li>
-                        @endif
-                        @endguest
+                        
                     </ul>
 
                     <!-- Right Side Of Navbar -->

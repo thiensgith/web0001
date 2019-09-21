@@ -2,47 +2,29 @@
 
 @section('style')
 <style>
-    
-
-    #bg {
-    background-position: center top;
+    h1{
+      font-size: 4rem;  
     }
-
-    #title-container {
-    position: relative;
+    .card{
+        border-radius: 20px;
     }
-
-    #title-bg {
-    /* Absolutely position it, but stretch it to all four corners, then put it just behind #title's z-index */
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
-    z-index: 99;
-    /* Pull the background 70px higher to the same place as #bg's */
-    background-position: center -70px;
-
-    -webkit-filter: blur(10px);
-    filter: url('/media/blur.svg#blur');
-    filter: blur(10px);
+    a.card , a#discover
+    {
+        color: #000000;
+        text-decoration: none;
+        font-weight: bold;
+        border-color: #000000;
     }
-
-    #title {
-    /* Put this on top of the blurred layer */
-    position: relative;
-    z-index: 100;
-    padding: 20px;
-    background: rgb(34,34,34); /* for IE */
-    background: rgba(34,34,34,0.75);
+    a.card:hover
+    {
+        color: #b3ffb3;
+        background: #5D8A4B;
+        transition: 0.3s;
+        border-color: #5D8A4B;
     }
-
-    @media (max-width: 600px ) {
-    #bg { padding: 10px; }
-    #title-bg { background-position: center -10px; }
+    .fa-shopping-basket, .fa-lightbulb, .fa-info-circle{
+        font-size: 3.5rem;
     }
-
-    #title h1, #title h5, #title h5 a,p { text-align: center; color: #fefefe; font-weight: normal; }
 </style>
     
 @endsection
@@ -55,10 +37,28 @@
                     <div id="title-container">
                         {{-- <div id="title-bg"></div> --}}
                         <div id="title">
-                        <h1 class="mt-5">Love plants ?</h2>
-                        <h1 class="mb-5">You are in love with life !</h2>
+                        <h1 class="mt-5">LOVE PLANTS ?</h1>
+                        <h2 class="mb-5 text-uppercase">You are in love with life !</h2>
                         <div class="row p-2 text-center">
-                            @foreach ([
+                            <a href="{{route('categories')}}" class="card col-md-2 px-0 mx-2">
+                                <div class="card-body">
+                                <i class="fas fa-shopping-basket mb-1"></i>
+                                PRODUCTS
+                                </div>
+                            </a>
+                            <a href="#" class="card col-md-2 px-0 mx-2">
+                                <div class="card-body">
+                                <i class="fas fa-lightbulb mb-1"></i>
+                                INSPIRATION
+                                </div>
+                            </a>
+                            <a href="#" class="card col-md-2 px-0 mx-2">
+                                <div class="card-body">
+                                <i class="fas fa-info-circle mb-1"></i>
+                                ABOUT ME
+                                </div>
+                            </a>
+                            {{-- @foreach ([
                                 [
                                 'title' => 'Species diversity',
                                 'content' => 'More than 500,000 species of plants, including seedlings, moss, ferns and nearby ferns are currently present',
@@ -78,9 +78,9 @@
                                         <p class="card-text">{{$item['content']}}</p>
                                     </div>
                                 </div>
-                            @endforeach
+                            @endforeach --}}
                         </div>
-                        <h5 class="mt-5"><a href="#">Discover »</a></h5>
+                        <h5 class="mt-4"><a href="#" id="discover">Discover »</a></h5>
                         </div>
                     </div>
                 </div>

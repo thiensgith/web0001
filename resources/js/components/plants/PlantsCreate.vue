@@ -7,6 +7,12 @@
         <div class="card-body">
             <form v-on:submit="saveForm()">
                 <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label class="control-label">Plant image</label>
+                        <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions" class="rounded"></vue-dropzone>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-sm-6 form-group">
                         <label class="control-label">Plant name</label>
                         <input type="text" v-model="plant.plant_name" class="form-control">
@@ -20,12 +26,6 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12 form-group">
-                        <label class="control-label">Plant image</label>
-                        <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions" class="rounded"></vue-dropzone>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 form-group">
                         <router-link to="/" class="m-1 btn btn-outline-secondary">Back</router-link>
                         <button class="m-1 btn btn-outline-primary">Create</button>
                     </div>
@@ -34,7 +34,6 @@
         </div>
     </div>
 </template>
-
 <script>
  
 import vue2Dropzone from 'vue2-dropzone'
