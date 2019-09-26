@@ -119,6 +119,7 @@ import 'vue-loading-overlay/dist/vue-loading.css'
                     })
                     .catch(function (resp) {
                         console.log(resp);
+                        app.isLoading = false;
                         alert("Could not update your plant");
                     });
             }

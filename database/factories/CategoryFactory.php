@@ -10,5 +10,6 @@ $factory->define(Category::class, function (Faker $faker) {
     return [
         'category_name' => $name,
         'category_slug' => str_replace(' ','-',$name),
+        'category_image' => $faker->imageUrl(200,200,'nature'),
     ];
 });

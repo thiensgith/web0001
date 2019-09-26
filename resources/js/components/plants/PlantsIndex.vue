@@ -58,7 +58,7 @@
         },
         methods: {
             deleteEntry(id, index) {
-                //if (confirm("Do you really want to delete it?")) {
+                if (confirm("Do you really want to delete it?")) {
                     var app = this;
                     axios.delete('/api/v1/plants/' + id)
                         .then(function (resp) {
@@ -67,7 +67,7 @@
                         .catch(function (resp) {
                             alert("Could not delete plant");
                         });
-                //}
+                }
             }
         }
     }

@@ -5271,7 +5271,7 @@ input[type=button].btn-block {
   display: inline-block;
   padding-right: 0.5rem;
   color: #6c757d;
-  content: "/";
+  content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPjxwYXRoIGQ9Ik0yLjUgMEwxIDEuNSAzLjUgNCAxIDYuNSAyLjUgOGw0LTQtNC00eiIgZmlsbD0iY3VycmVudENvbG9yIi8+PC9zdmc+);
 }
 
 .breadcrumb-item + .breadcrumb-item:hover::before {
@@ -17008,7 +17008,8 @@ select:active {
 }
 
 .dropzone {
-  background: #343a40 !important;
+  background-image: url("/assets/images/default/dropzone.gif") !important;
+  background-size: 100% 100% !important;
 }
 
 .dropzone .dz-message {

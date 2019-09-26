@@ -20,7 +20,7 @@ class PlantsController extends Controller
     {
         $plants = Plant::with('category:id,category_name')->get();
         foreach ($plants as $plant) {
-            $plant['plant_image'] = Storage::url('sm_'.$plant['plant_image']);
+            $plant['plant_image'] = Storage::url('plants/sm_'.$plant['plant_image']);
             //asset('storage/sm_'.$plant['plant_image']);
         }
         return $plants;
@@ -45,7 +45,7 @@ class PlantsController extends Controller
     public function store(Request $request)
     {
         $request->merge([ 
-            'plant_image' => $this->imageProcessing($request->plant_image[0]['dataURL']),
+            'plant_image' => $this->imageProcessing($request->plant_image[0]['dataURL'],'plants'),
             'plant_slug' => str_replace(' ','-',trim($request->plant_name))
         ]);
         $plant = Plant::create($request->all());
@@ -61,7 +61,7 @@ class PlantsController extends Controller
     public function show($id)
     {
         $plant = Plant::findOrFail($id);
-        $plant['plant_image'] = Storage::url('sm_'.$plant['plant_image']);
+        $plant['plant_image'] = Storage::url('plants/sm_'.$plant['plant_image']);
         return $plant;
     }
 
@@ -88,7 +88,7 @@ class PlantsController extends Controller
         $plant = Plant::findOrFail($id);
         if ($request->plant_image) {
             $request->merge([ 
-            'plant_image' => $this->imageProcessing($request->plant_image[0]['dataURL']),
+            'plant_image' => $this->imageProcessing($request->plant_image[0]['dataURL'],'plants'),
             'plant_slug' => str_replace(' ','-',trim($request->plant_name))
         ]);
             $plant->update($request->all());
@@ -110,8 +110,8 @@ class PlantsController extends Controller
     public function destroy($id)
     {
         $plant = Plant::findOrFail($id);
-        Storage::disk('local')->delete('public/lg_'.$plant->plant_image);
-        Storage::disk('local')->delete('public/sm_'.$plant->plant_image);
+        Storage::disk('local')->delete('public/plants/lg_'.$plant->plant_image);
+        Storage::disk('local')->delete('public/plants/sm_'.$plant->plant_image);
         $plant->delete();
         return '';
     }
@@ -122,7 +122,7 @@ class PlantsController extends Controller
      * @param string $img
      * @return string [Name of image]
      */
-    public function imageProcessing(String $img)
+    public function imageProcessing(String $img,String $path)
     {
         //Big
         $big = Image::make($img);
@@ -137,8 +137,8 @@ class PlantsController extends Controller
                     });
         $small->encode('jpg',90);
         $imageName = time().'-'.random_int(0, 1000);
-        Storage::disk('local')->put('public/lg_'.$imageName.'.jpg', $big);
-        Storage::disk('local')->put('public/sm_'.$imageName.'.jpg', $small);
+        Storage::disk('local')->put('public/'.$path.'/lg_'.$imageName.'.jpg', $big);
+        Storage::disk('local')->put('public/'.$path.'/sm_'.$imageName.'.jpg', $small);
         return $imageName.'.jpg';
     }
 }

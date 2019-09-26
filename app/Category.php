@@ -12,6 +12,6 @@ class Category extends Model
     }
 
     protected $fillable = [
-        'category_name', 'category_slug', 'category_visible',
+        'category_name', 'category_slug', 'category_visible', 'category_image',
     ];
 }

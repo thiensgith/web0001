@@ -31,7 +31,8 @@ select:focus, select:active{
 
 // Dropzone Override
 .dropzone {
-	background: $dark !important;
+	background-image: url('/assets/images/default/dropzone.gif') !important;
+  background-size: 100% 100% !important;
 }
 .dropzone .dz-message {
 	color: $light !important;

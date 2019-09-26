@@ -1893,6 +1893,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue2_dropzone__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue2-dropzone */ "./node_modules/vue2-dropzone/dist/vue2Dropzone.js");
+/* harmony import */ var vue2_dropzone__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue2_dropzone__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue2_dropzone_dist_vue2Dropzone_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue2-dropzone/dist/vue2Dropzone.min.css */ "./node_modules/vue2-dropzone/dist/vue2Dropzone.min.css");
+/* harmony import */ var vue2_dropzone_dist_vue2Dropzone_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue2_dropzone_dist_vue2Dropzone_min_css__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
+/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -1922,26 +1930,64 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    vueDropzone: vue2_dropzone__WEBPACK_IMPORTED_MODULE_0___default.a,
+    Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_2___default.a
+  },
   data: function data() {
     return {
+      dropzoneOptions: {
+        url: 'post',
+        autoProcessQueue: false,
+        parallelUploads: 1,
+        maxFiles: 1,
+        addRemoveLinks: true,
+        acceptedFiles: ".jpeg,.jpg,.png,",
+        init: function init() {
+          this.on("maxfilesexceeded", function (file) {
+            this.removeAllFiles();
+            this.addFile(file);
+          });
+        }
+      },
       category: {
         category_name: '',
+        category_image: '',
         category_visible: 1
-      }
+      },
+      isLoading: false,
+      fullPage: true
     };
   },
   methods: {
     saveForm: function saveForm() {
       event.preventDefault();
       var app = this;
+      app.isLoading = true;
       var newCategory = app.category;
+      newCategory.category_image = this.$refs.myVueDropzone.getAcceptedFiles();
       axios.post('/api/v1/categories', newCategory).then(function (resp) {
+        app.isLoading = false;
         app.$router.push({
           path: '/'
         });
       })["catch"](function (resp) {
         console.log(resp);
+        app.isLoading = false;
         alert("Could not create your category");
       });
     }
@@ -1959,6 +2005,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue2_dropzone__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue2-dropzone */ "./node_modules/vue2-dropzone/dist/vue2Dropzone.js");
+/* harmony import */ var vue2_dropzone__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue2_dropzone__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue2_dropzone_dist_vue2Dropzone_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue2-dropzone/dist/vue2Dropzone.min.css */ "./node_modules/vue2-dropzone/dist/vue2Dropzone.min.css");
+/* harmony import */ var vue2_dropzone_dist_vue2Dropzone_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue2_dropzone_dist_vue2Dropzone_min_css__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
+/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -1988,7 +2042,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    vueDropzone: vue2_dropzone__WEBPACK_IMPORTED_MODULE_0___default.a,
+    Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_2___default.a
+  },
   mounted: function mounted() {
     var app = this;
     var id = app.$route.params.id;
@@ -2001,22 +2076,49 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      dropzoneOptions: {
+        url: 'post',
+        autoProcessQueue: false,
+        parallelUploads: 1,
+        maxFiles: 1,
+        addRemoveLinks: true,
+        dictDefaultMessage: 'Drop files here to change category image',
+        acceptedFiles: ".jpeg,.jpg,.png,",
+        init: function init() {
+          this.on("maxfilesexceeded", function (file) {
+            this.removeAllFiles();
+            this.addFile(file);
+          });
+        }
+      },
       categoryId: null,
       category: {
         category_name: '',
+        category_image: '',
         category_visible: ''
-      }
+      },
+      //Vue Loading Overlay
+      isLoading: false,
+      fullPage: true
     };
   },
   methods: {
     saveForm: function saveForm() {
       event.preventDefault();
       var app = this;
+      app.isLoading = true;
       var newCategory = app.category;
+
+      if (this.$refs.myVueDropzone.getAcceptedFiles().length) {
+        newCategory.category_image = this.$refs.myVueDropzone.getAcceptedFiles();
+      } else newCategory.category_image = 0;
+
       axios.patch('/api/v1/categories/' + app.categoryId, newCategory).then(function (resp) {
+        app.isLoading = false;
         app.$router.replace('/');
       })["catch"](function (resp) {
         console.log(resp);
+        app.isLoading = false;
         alert("Could not create your category");
       });
     }
@@ -2034,6 +2136,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -2206,18 +2309,24 @@ __webpack_require__.r(__webpack_exports__);
     saveForm: function saveForm() {
       event.preventDefault();
       var app = this;
-      app.isLoading = true;
-      var newPlant = app.plant;
-      newPlant.plant_image = this.$refs.myVueDropzone.getAcceptedFiles();
-      axios.post('/api/v1/plants', newPlant).then(function (resp) {
-        app.isLoading = false;
-        app.$router.push({
-          path: '/'
+
+      if (app.categories.length == 0) {
+        alert("Please create category before");
+      } else {
+        app.isLoading = true;
+        var newPlant = app.plant;
+        newPlant.plant_image = this.$refs.myVueDropzone.getAcceptedFiles();
+        axios.post('/api/v1/plants', newPlant).then(function (resp) {
+          app.isLoading = false;
+          app.$router.push({
+            path: '/'
+          });
+        })["catch"](function (resp) {
+          console.log(resp);
+          app.isLoading = false;
+          alert("Could not create your plant");
         });
-      })["catch"](function (resp) {
-        console.log(resp);
-        alert("Could not create your plant");
-      });
+      }
     }
   }
 });
@@ -2353,6 +2462,7 @@ __webpack_require__.r(__webpack_exports__);
         app.$router.replace('/');
       })["catch"](function (resp) {
         console.log(resp);
+        app.isLoading = false;
         alert("Could not update your plant");
       });
     }
@@ -2427,13 +2537,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     deleteEntry: function deleteEntry(id, index) {
-      //if (confirm("Do you really want to delete it?")) {
-      var app = this;
-      axios["delete"]('/api/v1/plants/' + id).then(function (resp) {
-        app.plants.splice(index, 1);
-      })["catch"](function (resp) {
-        alert("Could not delete plant");
-      }); //}
+      if (confirm("Do you really want to delete it?")) {
+        var app = this;
+        axios["delete"]('/api/v1/plants/' + id).then(function (resp) {
+          app.plants.splice(index, 1);
+        })["catch"](function (resp) {
+          alert("Could not delete plant");
+        });
+      }
     }
   }
 });
@@ -38664,120 +38775,161 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h4", { staticClass: "card-title" }, [_vm._v("Create new category")]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
-      _c(
-        "form",
-        {
-          on: {
-            submit: function($event) {
-              return _vm.saveForm()
-            }
-          }
+  return _c(
+    "div",
+    { staticClass: "vld-parent" },
+    [
+      _c("loading", {
+        attrs: {
+          active: _vm.isLoading,
+          "can-cancel": false,
+          "is-full-page": _vm.fullPage
         },
-        [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-sm-6 form-group" }, [
-              _c("label", { staticClass: "control-label" }, [
-                _vm._v("Category name")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.category.category_name,
-                    expression: "category.category_name"
-                  }
+        on: {
+          "update:active": function($event) {
+            _vm.isLoading = $event
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("h4", { staticClass: "card-title" }, [_vm._v("Create new category")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                return _vm.saveForm()
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                { staticClass: "col-sm-12 form-group" },
+                [
+                  _c("label", { staticClass: "control-label" }, [
+                    _vm._v("Category image")
+                  ]),
+                  _vm._v(" "),
+                  _c("vue-dropzone", {
+                    ref: "myVueDropzone",
+                    staticClass: "rounded",
+                    attrs: { id: "dropzone", options: _vm.dropzoneOptions }
+                  })
                 ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                domProps: { value: _vm.category.category_name },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.category, "category_name", $event.target.value)
-                  }
-                }
-              })
+                1
+              )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-sm-6 form-group" }, [
-              _c("label", { staticClass: "control-label" }, [
-                _vm._v("Visible")
-              ]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-sm-6 form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v("Category name")
+                ]),
+                _vm._v(" "),
+                _c("input", {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.category.category_visible,
-                      expression: "category.category_visible"
+                      value: _vm.category.category_name,
+                      expression: "category.category_name"
                     }
                   ],
                   staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.category.category_name },
                   on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
                       _vm.$set(
                         _vm.category,
-                        "category_visible",
-                        $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
+                        "category_name",
+                        $event.target.value
                       )
                     }
                   }
-                },
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-6 form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v("Visible")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.category.category_visible,
+                        expression: "category.category_visible"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.category,
+                          "category_visible",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "1" } }, [_vm._v("Show")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "0" } }, [_vm._v("Hide")])
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                { staticClass: "col-sm-12 form-group" },
                 [
-                  _c("option", { attrs: { value: "1" } }, [_vm._v("Show")]),
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "m-1 btn btn-outline-secondary",
+                      attrs: { to: "/" }
+                    },
+                    [_vm._v("Back")]
+                  ),
                   _vm._v(" "),
-                  _c("option", { attrs: { value: "0" } }, [_vm._v("Hide")])
-                ]
+                  _c("button", { staticClass: "m-1 btn btn-outline-primary" }, [
+                    _vm._v("Create")
+                  ])
+                ],
+                1
               )
             ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              { staticClass: "col-sm-12 form-group" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "m-1 btn btn-outline-secondary",
-                    attrs: { to: "/" }
-                  },
-                  [_vm._v("Back")]
-                ),
-                _vm._v(" "),
-                _c("button", { staticClass: "m-1 btn btn-outline-primary" }, [
-                  _vm._v("Create")
-                ])
-              ],
-              1
-            )
-          ])
-        ]
-      )
-    ])
-  ])
+          ]
+        )
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38801,120 +38953,175 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h4", { staticClass: "card-title" }, [_vm._v("Edit category")]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
-      _c(
-        "form",
-        {
-          on: {
-            submit: function($event) {
-              return _vm.saveForm()
-            }
-          }
+  return _c(
+    "div",
+    { staticClass: "vld-parent" },
+    [
+      _c("loading", {
+        attrs: {
+          active: _vm.isLoading,
+          "can-cancel": false,
+          "is-full-page": _vm.fullPage
         },
-        [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-sm-6 form-group" }, [
-              _c("label", { staticClass: "control-label" }, [
-                _vm._v("Category name")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.category.category_name,
-                    expression: "category.category_name"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                domProps: { value: _vm.category.category_name },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.category, "category_name", $event.target.value)
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-sm-6 form-group" }, [
-              _c("label", { staticClass: "control-label" }, [
-                _vm._v("Visible")
-              ]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
+        on: {
+          "update:active": function($event) {
+            _vm.isLoading = $event
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("h4", { staticClass: "card-title" }, [_vm._v("Edit category")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                return _vm.saveForm()
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-sm-6 form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v("Category name")
+                ]),
+                _vm._v(" "),
+                _c("input", {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.category.category_visible,
-                      expression: "category.category_visible"
+                      value: _vm.category.category_name,
+                      expression: "category.category_name"
                     }
                   ],
                   staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.category.category_name },
                   on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
                       _vm.$set(
                         _vm.category,
-                        "category_visible",
-                        $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
+                        "category_name",
+                        $event.target.value
                       )
                     }
                   }
-                },
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-6 form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v("Visible")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.category.category_visible,
+                        expression: "category.category_visible"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.category,
+                          "category_visible",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "1" } }, [_vm._v("Show")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "0" } }, [_vm._v("Hide")])
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                { staticClass: "col-sm-9 form-group card border-0" },
                 [
-                  _c("option", { attrs: { value: "1" } }, [_vm._v("Show")]),
+                  _c("label", { staticClass: "control-label" }, [
+                    _vm._v("Category image")
+                  ]),
                   _vm._v(" "),
-                  _c("option", { attrs: { value: "0" } }, [_vm._v("Hide")])
-                ]
+                  _c("vue-dropzone", {
+                    ref: "myVueDropzone",
+                    staticClass: "rounded",
+                    attrs: { id: "dropzone", options: _vm.dropzoneOptions }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-3 form-group card border-0" }, [
+                _c("label", { staticClass: "control-label font-weight-bold" }, [
+                  _vm._v("Current category photos")
+                ]),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "img-fluid",
+                  attrs: {
+                    src: _vm.category.category_image,
+                    alt: _vm.category.category_name
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                { staticClass: "col-sm-12 form-group" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "m-1 btn btn-outline-secondary",
+                      attrs: { to: "/" }
+                    },
+                    [_vm._v("Back")]
+                  ),
+                  _vm._v(" "),
+                  _c("button", { staticClass: "m-1 btn btn-outline-primary" }, [
+                    _vm._v("Edit")
+                  ])
+                ],
+                1
               )
             ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              { staticClass: "col-sm-12 form-group" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "m-1 btn btn-outline-secondary",
-                    attrs: { to: "/" }
-                  },
-                  [_vm._v("Back")]
-                ),
-                _vm._v(" "),
-                _c("button", { staticClass: "m-1 btn btn-outline-primary" }, [
-                  _vm._v("Edit")
-                ])
-              ],
-              1
-            )
-          ])
-        ]
-      )
-    ])
-  ])
+          ]
+        )
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38966,6 +39173,15 @@ var render = function() {
           _vm._l(_vm.categories, function(category, index) {
             return _c("tr", [
               _c("td", [_vm._v(_vm._s(category.category_name))]),
+              _c("td", [
+                _c("img", {
+                  staticClass: "img-fluid",
+                  attrs: {
+                    src: category.category_image,
+                    alt: category.category_name
+                  }
+                })
+              ]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(category.category_slug))]),
               _vm._v(" "),
@@ -39028,6 +39244,8 @@ var staticRenderFns = [
     return _c("thead", { staticClass: "thead-dark" }, [
       _c("tr", [
         _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Image")]),
         _vm._v(" "),
         _c("th", [_vm._v("Slug (URL)")]),
         _vm._v(" "),

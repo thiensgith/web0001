@@ -16,4 +16,5 @@ class Controller extends BaseController
         $categories = new Category;
         return view()->share('navbar_data', $categories->where('category_visible',1)->get());
     }
+
 }

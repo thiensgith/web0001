@@ -9,6 +9,7 @@
                 <thead class="thead-dark">
                 <tr>
                     <th>Name</th>
+                    <th>Image</th>
                     <th>Slug (URL)</th>
                     <th>Visible</th>
                     <th width="100">&nbsp;</th>
@@ -16,7 +17,7 @@
                 </thead>
                 <tbody>
                 <tr v-for="category, index in categories">
-                    <td>{{ category.category_name }}</td>
+                    <td>{{ category.category_name }}</td><td><img :src="category.category_image" class="img-fluid" :alt="category.category_name"></td>
                     <td>{{ category.category_slug }}</td>
                     <td>{{ category.category_visible }}</td>
                     <td>

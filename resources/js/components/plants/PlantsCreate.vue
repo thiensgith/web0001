@@ -90,6 +90,11 @@ import 'vue-loading-overlay/dist/vue-loading.css'
             saveForm() {
                 event.preventDefault();
                 var app = this;
+                if (app.categories.length == 0) {
+                    alert("Please create category before");
+                }
+                else {
+                
                 app.isLoading = true;
                 var newPlant = app.plant;
                 newPlant.plant_image = this.$refs.myVueDropzone.getAcceptedFiles();
@@ -100,8 +105,10 @@ import 'vue-loading-overlay/dist/vue-loading.css'
                     })
                     .catch(function (resp) {
                         console.log(resp);
+                        app.isLoading = false;
                         alert("Could not create your plant");
                     });
+                }
             }
         }
     }
