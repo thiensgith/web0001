@@ -50,6 +50,9 @@
             border: 1px solid #ffffff;
             border-radius: 0.25rem;
         }
+        .bd-footer {
+            background-color: transparent;
+        }
     </style>
     @yield('style')
 </head>
@@ -113,5 +116,15 @@
                 @yield('content')
         </main>
     </div>
+    <footer class="bd-footer text-muted">
+        <div class="container-fluid p-3 p-md-5">
+            <ul class="bd-footer-links">
+            <li><a href="https://github.com/thiensgith/web0001">GitHub</a></li>
+            <li><a href="https://www.facebook.com/borntodiee">A Cute Cat</a></li>
+            <li><a href="#">About</a></li>
+            </ul>
+            <p>Designed and built with all the love of <a href="https://www.facebook.com/borntodiee">A Cute Cat</a> with the help of <a href="#">open source</a>.</p>
+        </div>
+    </footer>
 </body>
 </html>

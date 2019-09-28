@@ -45,7 +45,7 @@ class CategoriesController extends Controller
     {
         $request->merge([
             'category_image' => $this->imageProcessing($request->category_image[0]['dataURL'],'categories'),
-            'category_slug' => str_replace(' ','-',trim($request->category_name))
+            'category_slug' => $this->sluger($request->category_name),
         ]);
         $category = Category::create($request->all());
         return $category;
@@ -90,12 +90,12 @@ class CategoriesController extends Controller
         if ($request->category_image) {
             $request->merge([ 
             'category_image' => $this->imageProcessing($request->category_image[0]['dataURL'],'categories'),
-            'category_slug' => str_replace(' ','-',trim($request->category_name))
+            'category_slug' => $this->sluger($request->category_name)
         ]);
             $category->update($request->all());
         } else {
             $request->merge([
-                'category_slug' => str_replace(' ','-',trim($request->category_name))
+                'category_slug' => $this->sluger($request->category_name)
             ]);
             $category->update($request->except(['category_image']));
         }

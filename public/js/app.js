@@ -1939,6 +1939,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1970,26 +1978,41 @@ __webpack_require__.r(__webpack_exports__);
         category_visible: 1
       },
       isLoading: false,
-      fullPage: true
+      fullPage: true,
+      errors: []
     };
   },
   methods: {
+    validate: function validate() {
+      if (this.$refs.myVueDropzone.getAcceptedFiles().length == 0) {
+        this.errors.push("Image is empty");
+      }
+
+      if (this.category.category_name === '') {
+        this.errors.push("Name is empty");
+      }
+    },
     saveForm: function saveForm() {
       event.preventDefault();
       var app = this;
-      app.isLoading = true;
-      var newCategory = app.category;
-      newCategory.category_image = this.$refs.myVueDropzone.getAcceptedFiles();
-      axios.post('/api/v1/categories', newCategory).then(function (resp) {
-        app.isLoading = false;
-        app.$router.push({
-          path: '/'
+      app.errors = [];
+      app.validate();
+
+      if (app.errors.length == 0) {
+        app.isLoading = true;
+        var newCategory = app.category;
+        newCategory.category_image = this.$refs.myVueDropzone.getAcceptedFiles();
+        axios.post('/api/v1/categories', newCategory).then(function (resp) {
+          app.isLoading = false;
+          app.$router.push({
+            path: '/'
+          });
+        })["catch"](function (resp) {
+          console.log(resp);
+          app.isLoading = false;
+          alert("Could not create your category");
         });
-      })["catch"](function (resp) {
-        console.log(resp);
-        app.isLoading = false;
-        alert("Could not create your category");
-      });
+      }
     }
   }
 });
@@ -2013,6 +2036,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
 /* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_3__);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2099,28 +2130,39 @@ __webpack_require__.r(__webpack_exports__);
       },
       //Vue Loading Overlay
       isLoading: false,
-      fullPage: true
+      fullPage: true,
+      errors: []
     };
   },
   methods: {
+    validate: function validate() {
+      if (this.category.category_name === '') {
+        this.errors.push("Name is empty");
+      }
+    },
     saveForm: function saveForm() {
       event.preventDefault();
       var app = this;
-      app.isLoading = true;
-      var newCategory = app.category;
+      app.errors = [];
+      app.validate();
 
-      if (this.$refs.myVueDropzone.getAcceptedFiles().length) {
-        newCategory.category_image = this.$refs.myVueDropzone.getAcceptedFiles();
-      } else newCategory.category_image = 0;
+      if (app.errors.length == 0) {
+        app.isLoading = true;
+        var newCategory = app.category;
 
-      axios.patch('/api/v1/categories/' + app.categoryId, newCategory).then(function (resp) {
-        app.isLoading = false;
-        app.$router.replace('/');
-      })["catch"](function (resp) {
-        console.log(resp);
-        app.isLoading = false;
-        alert("Could not create your category");
-      });
+        if (this.$refs.myVueDropzone.getAcceptedFiles().length) {
+          newCategory.category_image = this.$refs.myVueDropzone.getAcceptedFiles();
+        } else newCategory.category_image = 0;
+
+        axios.patch('/api/v1/categories/' + app.categoryId, newCategory).then(function (resp) {
+          app.isLoading = false;
+          app.$router.replace('/');
+        })["catch"](function (resp) {
+          console.log(resp);
+          app.isLoading = false;
+          alert("Could not create your category");
+        });
+      }
     }
   }
 });
@@ -2259,6 +2301,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2291,6 +2341,7 @@ __webpack_require__.r(__webpack_exports__);
         plant_slug: ''
       },
       categories: [],
+      errors: [],
       //Vue Loading Overlay
       isLoading: false,
       fullPage: true
@@ -2306,13 +2357,30 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
+    validate: function validate() {
+      if (this.$refs.myVueDropzone.getAcceptedFiles().length == 0) {
+        this.errors.push("Image is empty");
+      }
+
+      if (this.plant.plant_name === '') {
+        this.errors.push("Name is empty");
+      }
+
+      if (this.plant.category_id === '') {
+        this.errors.push("Category is empty");
+      }
+
+      if (this.categories.length == 0) {
+        this.errors.push("Please create category before");
+      }
+    },
     saveForm: function saveForm() {
       event.preventDefault();
       var app = this;
+      app.errors = [];
+      app.validate();
 
-      if (app.categories.length == 0) {
-        alert("Please create category before");
-      } else {
+      if (app.errors.length == 0) {
         app.isLoading = true;
         var newPlant = app.plant;
         newPlant.plant_image = this.$refs.myVueDropzone.getAcceptedFiles();
@@ -2350,6 +2418,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
 /* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_3__);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2443,28 +2519,43 @@ __webpack_require__.r(__webpack_exports__);
       categories: [],
       //Vue Loading Overlay
       isLoading: false,
-      fullPage: true
+      fullPage: true,
+      errors: []
     };
   },
   methods: {
+    validate: function validate() {
+      if (this.plant.plant_name === '') {
+        this.errors.push("Name is empty");
+      }
+
+      if (this.plant.category_id === '') {
+        this.errors.push("Category is empty");
+      }
+    },
     saveForm: function saveForm() {
       event.preventDefault();
       var app = this;
-      app.isLoading = true;
-      var newPlant = app.plant;
+      app.errors = [];
+      app.validate();
 
-      if (this.$refs.myVueDropzone.getAcceptedFiles().length) {
-        newPlant.plant_image = this.$refs.myVueDropzone.getAcceptedFiles();
-      } else newPlant.plant_image = 0;
+      if (app.errors.length == 0) {
+        app.isLoading = true;
+        var newPlant = app.plant;
 
-      axios.patch('/api/v1/plants/' + app.plantId, newPlant).then(function (resp) {
-        app.isLoading = false;
-        app.$router.replace('/');
-      })["catch"](function (resp) {
-        console.log(resp);
-        app.isLoading = false;
-        alert("Could not update your plant");
-      });
+        if (this.$refs.myVueDropzone.getAcceptedFiles().length) {
+          newPlant.plant_image = this.$refs.myVueDropzone.getAcceptedFiles();
+        } else newPlant.plant_image = 0;
+
+        axios.patch('/api/v1/plants/' + app.plantId, newPlant).then(function (resp) {
+          app.isLoading = false;
+          app.$router.replace('/');
+        })["catch"](function (resp) {
+          console.log(resp);
+          app.isLoading = false;
+          alert("Could not update your plant");
+        });
+      }
     }
   }
 });
@@ -38805,6 +38896,49 @@ var render = function() {
             }
           },
           [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.errors.length > 0,
+                    expression: "errors.length > 0"
+                  }
+                ],
+                staticClass: "alert alert-warning alert-dismissible fade show",
+                attrs: { id: "error", role: "alert" }
+              },
+              [
+                _vm._l(_vm.errors, function(item) {
+                  return _c("div", [
+                    _c("strong", [_vm._v("Error: ")]),
+                    _vm._v(_vm._s(item) + ".\n                ")
+                  ])
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: { type: "button", "aria-label": "Close" },
+                    on: {
+                      click: function($event) {
+                        _vm.errors = []
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ],
+              2
+            ),
+            _vm._v(" "),
             _c("div", { staticClass: "row" }, [
               _c(
                 "div",
@@ -38983,6 +39117,49 @@ var render = function() {
             }
           },
           [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.errors.length > 0,
+                    expression: "errors.length > 0"
+                  }
+                ],
+                staticClass: "alert alert-warning alert-dismissible fade show",
+                attrs: { id: "error", role: "alert" }
+              },
+              [
+                _vm._l(_vm.errors, function(item) {
+                  return _c("div", [
+                    _c("strong", [_vm._v("Error: ")]),
+                    _vm._v(_vm._s(item) + ".\n                ")
+                  ])
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: { type: "button", "aria-label": "Close" },
+                    on: {
+                      click: function($event) {
+                        _vm.errors = []
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ],
+              2
+            ),
+            _vm._v(" "),
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-sm-6 form-group" }, [
                 _c("label", { staticClass: "control-label" }, [
@@ -39307,6 +39484,49 @@ var render = function() {
             }
           },
           [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.errors.length > 0,
+                    expression: "errors.length > 0"
+                  }
+                ],
+                staticClass: "alert alert-warning alert-dismissible fade show",
+                attrs: { id: "error", role: "alert" }
+              },
+              [
+                _vm._l(_vm.errors, function(item) {
+                  return _c("div", [
+                    _c("strong", [_vm._v("Error: ")]),
+                    _vm._v(_vm._s(item) + ".\n                ")
+                  ])
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: { type: "button", "aria-label": "Close" },
+                    on: {
+                      click: function($event) {
+                        _vm.errors = []
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ],
+              2
+            ),
+            _vm._v(" "),
             _c("div", { staticClass: "row" }, [
               _c(
                 "div",
@@ -39482,6 +39702,49 @@ var render = function() {
             }
           },
           [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.errors.length > 0,
+                    expression: "errors.length > 0"
+                  }
+                ],
+                staticClass: "alert alert-warning alert-dismissible fade show",
+                attrs: { id: "error", role: "alert" }
+              },
+              [
+                _vm._l(_vm.errors, function(item) {
+                  return _c("div", [
+                    _c("strong", [_vm._v("Error: ")]),
+                    _vm._v(_vm._s(item) + ".\n                ")
+                  ])
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: { type: "button", "aria-label": "Close" },
+                    on: {
+                      click: function($event) {
+                        _vm.errors = []
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ],
+              2
+            ),
+            _vm._v(" "),
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-sm-6 form-group" }, [
                 _c("label", { staticClass: "control-label" }, [

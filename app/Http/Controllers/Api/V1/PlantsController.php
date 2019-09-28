@@ -44,9 +44,12 @@ class PlantsController extends Controller
      */
     public function store(Request $request)
     {
+        
+
+
         $request->merge([ 
             'plant_image' => $this->imageProcessing($request->plant_image[0]['dataURL'],'plants'),
-            'plant_slug' => str_replace(' ','-',trim($request->plant_name))
+            'plant_slug' => $this->sluger($request->plant_name)
         ]);
         $plant = Plant::create($request->all());
         return $plant;
@@ -88,13 +91,13 @@ class PlantsController extends Controller
         $plant = Plant::findOrFail($id);
         if ($request->plant_image) {
             $request->merge([ 
-            'plant_image' => $this->imageProcessing($request->plant_image[0]['dataURL'],'plants'),
-            'plant_slug' => str_replace(' ','-',trim($request->plant_name))
+                'plant_image' => $this->imageProcessing($request->plant_image[0]['dataURL'],'plants'),
+                'plant_slug' => sluger($request->plant_name)
         ]);
             $plant->update($request->all());
         } else {
             $request->merge([ 
-            'plant_slug' => str_replace(' ','-',trim($request->plant_name))
+                'plant_slug' => sluger($request->plant_name)
             ]);
             $plant->update($request->except(['plant_image']));
         }

@@ -6,6 +6,14 @@
         <h4 class="card-title">Edit category</h4>
         <div class="card-body">
             <form v-on:submit="saveForm()">
+                <div v-show="errors.length > 0" id="error" class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <div v-for="item in errors">
+                        <strong>Error: </strong>{{item}}.
+                    </div>
+                    <button type="button" class="close" v-on:click="errors = []" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 <div class="row">
                     <div class="col-sm-6 form-group">
                         <label class="control-label">Category name</label>
@@ -79,7 +87,7 @@ import 'vue-loading-overlay/dist/vue-loading.css'
                             this.removeAllFiles();
                             this.addFile(file);
                         });
-                    }   
+                    }
 
                 },
                 categoryId: null,
@@ -90,29 +98,40 @@ import 'vue-loading-overlay/dist/vue-loading.css'
                 },
                 //Vue Loading Overlay
                 isLoading: false,
-                fullPage: true
+                fullPage: true,
+                errors: [],
             }
         },
         methods: {
+            validate() {
+                if (this.category.category_name === '')
+                {
+                    this.errors.push("Name is empty");
+                }
+            },
             saveForm() {
                 event.preventDefault();
                 var app = this;
-                app.isLoading = true;
-                var newCategory = app.category;
-                if (this.$refs.myVueDropzone.getAcceptedFiles().length) {
-                    newCategory.category_image = this.$refs.myVueDropzone.getAcceptedFiles();
+                app.errors = [];
+                app.validate();
+                if (app.errors.length == 0) {
+                    app.isLoading = true;
+                    var newCategory = app.category;
+                    if (this.$refs.myVueDropzone.getAcceptedFiles().length) {
+                        newCategory.category_image = this.$refs.myVueDropzone.getAcceptedFiles();
+                    }
+                    else newCategory.category_image = 0;
+                    axios.patch('/api/v1/categories/' + app.categoryId, newCategory)
+                        .then(function (resp) {
+                            app.isLoading = false;
+                            app.$router.replace('/');
+                        })
+                        .catch(function (resp) {
+                            console.log(resp);
+                            app.isLoading = false;
+                            alert("Could not create your category");
+                        });
                 }
-                else newCategory.category_image = 0;
-                axios.patch('/api/v1/categories/' + app.categoryId, newCategory)
-                    .then(function (resp) {
-                        app.isLoading = false;
-                        app.$router.replace('/');
-                    })
-                    .catch(function (resp) {
-                        console.log(resp);
-                        app.isLoading = false;
-                        alert("Could not create your category");
-                    });
             }
         }
     }
