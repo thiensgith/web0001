@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Category;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Collection;
 use App\Plant;
 
 class CoreController extends Controller
