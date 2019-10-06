@@ -16,7 +16,7 @@ class CoreController extends Controller
     {
         $categories = Category::all();
         foreach ($categories as $category) {
-            $id_images = collect(json_decode($category['category_image'],true))->collapse();
+            $id_images = collect(json_decode($category['category_image'],true))->collapse()->toArray();
             $category['category_image'] = self::DRIVE_CONFIG_URL.$id_images['sm'];
         }
         return view('categories', ['data' => $categories]);
@@ -30,7 +30,7 @@ class CoreController extends Controller
         $plants = Plant::where('category_id', $category->id)->get();
 
         foreach ($plants as $plant) {
-            $id_images = collect(json_decode($plant['plant_image'],true))->collapse();
+            $id_images = collect(json_decode($plant['plant_image'],true))->collapse()->toArray();
             $plant['plant_image'] = self::DRIVE_CONFIG_URL.$id_images['sm'];
         }
         return view('plants', [
@@ -46,7 +46,7 @@ class CoreController extends Controller
         ->firstOrFail();
         $plant = Plant::where('category_id', $category->id)->where('plant_slug' , $plant_slug)->firstOrFail();
 
-        $id_images = collect(json_decode($plant['plant_image'],true))->collapse();
+        $id_images = collect(json_decode($plant['plant_image'],true))->collapse()->toArray();
         $plant['plant_image'] = self::DRIVE_CONFIG_URL.$id_images['sm'];
 
         return view('detail_plant' , [
