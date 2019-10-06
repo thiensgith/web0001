@@ -89,3 +89,13 @@ select:focus, select:active{
     }
   }
 }
+
+
+//view admin/../index.blade.php
+.outer-card {
+  background-color: transparent !important;
+  border: 0;
+}
+.outer-card > .card-header{
+  background-color: $white !important;
+}

@@ -23,7 +23,7 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        return view('user.admin.dashboard');
+        return view('user.admin.dashboard.index');
     }
 
     public function category()

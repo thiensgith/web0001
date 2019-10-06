@@ -58,6 +58,7 @@
                                 ABOUT ME
                                 </div>
                             </a>
+
                             {{-- @foreach ([
                                 [
                                 'title' => 'Species diversity',

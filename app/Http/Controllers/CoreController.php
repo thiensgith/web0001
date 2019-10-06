@@ -10,13 +10,14 @@ use App\Plant;
 
 class CoreController extends Controller
 {
+    const DRIVE_CONFIG_URL = ' https://docs.google.com/uc?id=';
 
     public function categories()
     {
         $categories = Category::all();
         foreach ($categories as $category) {
-            $category['category_image'] = Storage::url('categories/sm_'.$category['category_image']);
-            //asset('storage/sm_'.$category['category_image']);
+            $id_images = collect(json_decode($category['category_image'],true))->collapse();
+            $category['category_image'] = self::DRIVE_CONFIG_URL.$id_images['sm'];
         }
         return view('categories', ['data' => $categories]);
     }
@@ -29,8 +30,8 @@ class CoreController extends Controller
         $plants = Plant::where('category_id', $category->id)->get();
 
         foreach ($plants as $plant) {
-            $plant['plant_image'] = Storage::url('plants/sm_'.$plant['plant_image']);
-            //asset('storage/sm_'.$plant['plant_image']);
+            $id_images = collect(json_decode($plant['plant_image'],true))->collapse();
+            $plant['plant_image'] = self::DRIVE_CONFIG_URL.$id_images['sm'];
         }
         return view('plants', [
             'data' => $plants,
@@ -45,7 +46,8 @@ class CoreController extends Controller
         ->firstOrFail();
         $plant = Plant::where('category_id', $category->id)->where('plant_slug' , $plant_slug)->firstOrFail();
 
-        $plant['plant_image'] = Storage::url('plants/sm_'.$plant['plant_image']);
+        $id_images = collect(json_decode($plant['plant_image'],true))->collapse();
+        $plant['plant_image'] = self::DRIVE_CONFIG_URL.$id_images['sm'];
 
         return view('detail_plant' , [
             'current_category_name' => $category->category_name,

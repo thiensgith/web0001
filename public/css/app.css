@@ -17069,3 +17069,12 @@ select:active {
   margin-left: 1rem;
 }
 
+.outer-card {
+  background-color: transparent !important;
+  border: 0;
+}
+
+.outer-card > .card-header {
+  background-color: #fff !important;
+}
+

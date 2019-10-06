@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Api\V1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Collection;
 use App\Plant;
-use Image;
+
 
 class PlantsController extends Controller
 {
+
+    const DRIVE_CONFIG_URL = ' https://docs.google.com/uc?id=';
+
+    
+
    /**
      * Display a listing of the resource.
      *
@@ -20,7 +25,8 @@ class PlantsController extends Controller
     {
         $plants = Plant::with('category:id,category_name')->get();
         foreach ($plants as $plant) {
-            $plant['plant_image'] = Storage::url('plants/sm_'.$plant['plant_image']);
+            $id_images = collect(json_decode($plant['plant_image'],true))->collapse();
+            $plant['plant_image'] = self::DRIVE_CONFIG_URL.$id_images['sm'];
             //asset('storage/sm_'.$plant['plant_image']);
         }
         return $plants;
@@ -44,9 +50,6 @@ class PlantsController extends Controller
      */
     public function store(Request $request)
     {
-        
-
-
         $request->merge([ 
             'plant_image' => $this->imageProcessing($request->plant_image[0]['dataURL'],'plants'),
             'plant_slug' => $this->sluger($request->plant_name)
@@ -64,7 +67,8 @@ class PlantsController extends Controller
     public function show($id)
     {
         $plant = Plant::findOrFail($id);
-        $plant['plant_image'] = Storage::url('plants/sm_'.$plant['plant_image']);
+        $id_images = collect(json_decode($plant['plant_image'],true))->collapse();
+        $plant['plant_image'] = self::DRIVE_CONFIG_URL.$id_images['sm'];
         return $plant;
     }
 
@@ -113,35 +117,9 @@ class PlantsController extends Controller
     public function destroy($id)
     {
         $plant = Plant::findOrFail($id);
-        Storage::disk('local')->delete('public/plants/lg_'.$plant->plant_image);
-        Storage::disk('local')->delete('public/plants/sm_'.$plant->plant_image);
+        // Storage::disk('local')->delete('public/plants/lg_'.$plant->plant_image);
+        // Storage::disk('local')->delete('public/plants/sm_'.$plant->plant_image);
         $plant->delete();
         return '';
-    }
-
-    /**
-     * Image processing from base64 encoded image data
-     *
-     * @param string $img
-     * @return string [Name of image]
-     */
-    public function imageProcessing(String $img,String $path)
-    {
-        //Big
-        $big = Image::make($img);
-        $big->resize(640, 480, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-        $big->encode('jpg',90);
-        //Small
-        $small = Image::make($img);
-        $small->resize(320, 240, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-        $small->encode('jpg',90);
-        $imageName = time().'-'.random_int(0, 1000);
-        Storage::disk('local')->put('public/'.$path.'/lg_'.$imageName.'.jpg', $big);
-        Storage::disk('local')->put('public/'.$path.'/sm_'.$imageName.'.jpg', $small);
-        return $imageName.'.jpg';
     }
 }

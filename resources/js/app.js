@@ -28,6 +28,9 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+
+import DashboardIndex from './components/dashboard/DashboardIndex.vue';
+
 import UsersIndex from './components/users/UsersIndex.vue';
 import UsersCreate from './components/users/UsersCreate.vue';
 import UsersEdit from './components/users/UsersEdit.vue';
@@ -47,8 +50,10 @@ const routes = [
         	usersIndex: UsersIndex,
             categoriesIndex: CategoriesIndex,
             plantsIndex: PlantsIndex,
+            dashboardIndex: DashboardIndex,
         }
     },
+
     {path: '/create-user', component: UsersCreate, name: 'createUser'},
     {path: '/edit-user/:id', component: UsersEdit, name: 'editUser'},
 
@@ -59,7 +64,7 @@ const routes = [
     {path: '/edit-plant/:id', component: PlantsEdit, name: 'editPlant'},
 ]
 const router = new VueRouter({
-	routes
+	routes,
 })
 
 const app = new Vue({ router }).$mount('#app')

@@ -1,10 +1,12 @@
 <template>
     <div>
-        <h4 class="card-title">Categories list</h4>
-        <div class="form-group">
-            <router-link :to="{name: 'createCategory'}" class="btn btn-outline-dark">Create new category</router-link>
-        </div>
         <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div class="card-title h4 m-0">Categories list</div>
+                <div class="form-group">
+                <router-link :to="{name: 'createCategory'}" class="btn btn-outline-dark">Create new category</router-link>
+                </div>
+            </div>
             <table class="table">
                 <thead class="thead-dark">
                 <tr>

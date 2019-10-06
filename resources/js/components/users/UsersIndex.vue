@@ -1,11 +1,12 @@
 <template>
     <div>
-        <h4 class="card-title">Users list</h4>
-        <div class="form-group">
-            <router-link :to="{name: 'createUser'}" class="btn btn-outline-dark">Create new user</router-link>
-        </div>
         <div class="card-body">
-            <table class="table">
+            <div class="d-flex justify-content-between">
+                <div class="card-title h4 m-0">Users list</div>
+                <div class="form-group">
+                <router-link :to="{name: 'createUser'}" class="btn btn-outline-dark">Create new user</router-link>
+                </div>
+            </div>            <table class="table">
                 <thead class="thead-dark">
                 <tr>
                     <th>Id</th>
