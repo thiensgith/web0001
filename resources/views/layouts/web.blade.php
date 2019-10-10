@@ -12,14 +12,16 @@
     <link rel="shortcut icon" type="image/png" href="{{asset('favicon.ico')}}"/>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script async src="//pagead2.googlesyndication.com/
-    pagead/js/adsbygoogle.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149774644-1"></script>
     <script>
-    (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-8446253636658211",
-    enable_page_level_ads: true
-    });
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-149774644-1');
     </script>
+    
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
