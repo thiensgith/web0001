@@ -37,22 +37,22 @@
                     <div id="title-container">
                         {{-- <div id="title-bg"></div> --}}
                         <div id="title">
-                        <h1 class="mt-5">LOVE PLANTS ?</h1>
-                        <h2 class="mb-5 text-uppercase">You are in love with life !</h2>
+                        <h1 class="mt-5">Miaogo</h1>
+                        <h2 class="mb-5 text-uppercase">LOVE PLANTS ? - You are in love with life !</h2>
                         <div class="row p-2 text-center">
-                            <a href="{{route('categories')}}" class="card col-md-2 px-0 mx-2">
+                            <a href="{{route('categories')}}" class="card col-md-2 px-0 mx-2 my-2">
                                 <div class="card-body">
                                 <i class="fas fa-shopping-basket mb-1"></i>
                                 PRODUCTS
                                 </div>
                             </a>
-                            <a href="#" class="card col-md-2 px-0 mx-2">
+                            <a href="#" class="card col-md-2 px-0 mx-2 my-2">
                                 <div class="card-body">
                                 <i class="fas fa-lightbulb mb-1"></i>
                                 INSPIRATION
                                 </div>
                             </a>
-                            <a href="#" class="card col-md-2 px-0 mx-2">
+                            <a href="#" class="card col-md-2 px-0 mx-2 my-2">
                                 <div class="card-body">
                                 <i class="fas fa-info-circle mb-1"></i>
                                 ABOUT ME

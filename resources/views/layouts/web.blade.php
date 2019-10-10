@@ -9,6 +9,7 @@
 
     <title>{{ config('app.name', 'The Earth Garden') }}</title>
 
+    <link rel="shortcut icon" type="image/png" href="{{asset('favicon.ico')}}"/>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script async src="//pagead2.googlesyndication.com/
@@ -60,9 +61,10 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg pt-3">
             <div class="container-fluid">
-                    <a class="col-md navbar-brand" href="{{ route('home')}}"><img src="{{asset("assets/images/default/brand.png")}}" alt="Brand"></a>
-                    <button class="navbar-toggler" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+                <div class="row w-100">
+                    <a class="col navbar-brand m-0" href="{{ route('home')}}"><img src="{{asset("assets/images/default/Miaogo.png")}}" alt="Brand" height="100px" width="100px"></a>
+                    <button class="navbar-toggler p-0" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"><i class="fas fa-bars py-1 text-white"></i></span>
                     </button>
                     <div id="my-nav" class="collapse navbar-collapse col-md-9">
                         
@@ -109,7 +111,7 @@
                             @endguest --}}
                         </ul>
                     </div>
-                    <div class="col-md-2"></div>
+                </div>
             </div>
         </nav>
         <main>
