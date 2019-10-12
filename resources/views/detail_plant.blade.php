@@ -1,5 +1,9 @@
 @extends('layouts.web')
 
+@section('title')
+{{$current_plant}}
+@endsection
+
 @section('style')
 <style>
     #content{

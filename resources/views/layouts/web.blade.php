@@ -7,19 +7,22 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'The Earth Garden') }}</title>
+    <title>@yield('title') - {{ config('app.name', 'Miaogo') }}</title>
 
     <link rel="shortcut icon" type="image/png" href="{{asset('favicon.ico')}}"/>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script async src="//pagead2.googlesyndication.com/
-    pagead/js/adsbygoogle.js"></script>
+    <!-- Google Analytics -->
     <script>
-    (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-8446253636658211",
-    enable_page_level_ads: true
-    });
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-XXXXX-Y', 'auto');
+    ga('send', 'pageview');
     </script>
+    <!-- End Google Analytics -->
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">

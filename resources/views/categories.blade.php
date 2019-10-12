@@ -1,5 +1,9 @@
 @extends('layouts.web')
 
+@section('title')
+Categories
+@endsection
+
 @section('style')
 <style>
     #content{
