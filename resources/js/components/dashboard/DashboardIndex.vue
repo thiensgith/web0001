@@ -38,7 +38,9 @@
         },
         mounted() {
             var app = this;
-            axios.get('/api/v1/users')
+            axios.get('/api/v1/users',{
+                headers: app.$bearerAPITOKEN
+            })
                 .then(function (resp) {
                     app.users = resp.data;
                 })
@@ -51,7 +53,9 @@
             deleteEntry(id, index) {
                 if (confirm("Do you really want to delete it?")) {
                     var app = this;
-                    axios.delete('/api/v1/users/' + id)
+                    axios.delete('/api/v1/users/' + id,{
+                headers: app.$bearerAPITOKEN
+            })
                         .then(function (resp) {
                             app.users.splice(index, 1);
                         })

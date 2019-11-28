@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function dashboard(Request $request)
     {
-        if ($request->user()->authorizeRoles('admin',true)) {
+        if ($request->user()->hasRole('admin')) {
             return redirect()->route('admin.index');
         }
         return view('user.dashboard');

@@ -64,7 +64,9 @@ import 'vue-loading-overlay/dist/vue-loading.css'
             let app = this;
             let id = app.$route.params.id;
             app.categoryId = id;
-            axios.get('/api/v1/categories/' + id)
+            axios.get('/api/v1/categories/' + id,{
+                headers: app.$bearerAPITOKEN
+            })
                 .then(function (resp) {
                     app.category = resp.data;
                 })
@@ -121,7 +123,9 @@ import 'vue-loading-overlay/dist/vue-loading.css'
                         newCategory.category_image = this.$refs.myVueDropzone.getAcceptedFiles();
                     }
                     else newCategory.category_image = 0;
-                    axios.patch('/api/v1/categories/' + app.categoryId, newCategory)
+                    axios.patch('/api/v1/categories/' + app.categoryId, newCategory,{
+                headers: app.$bearerAPITOKEN
+            })
                         .then(function (resp) {
                             app.isLoading = false;
                             app.$router.replace('/');

@@ -42,23 +42,41 @@ class User extends Authenticatable
     */
     public function hasAnyRole($roles)
     {
-    return null !== $this->roles()->whereIn('name', $roles)->first();
+        return $this->roles()->whereIn('name', $roles)->exists();
     }
+
     /**
     * Check one role
     * @param string $role
     */
     public function hasRole($role)
     {
-    return null !== $this->roles()->where('name', $role)->first();
+        return $this->roles()->where('name', $role)->exists();
     }
+
+    public function rolePermission()
+    {
+        return $this->hasOneThrough('App\Permission','App\Role');
+    }
+
+    /**
+     *  Generate Api_Token 
+     */
+    public function generateToken()
+    {
+        $this->api_token = str_random(60);
+        $this->save();
+
+        return $this->api_token;
+    }
+    
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'fname', 'lname', 'gender', 'email', 'password', 'avatar'
+        'fname', 'lname', 'gender', 'email', 'password', 'avatar', 'api_token',
     ];
 
     /**

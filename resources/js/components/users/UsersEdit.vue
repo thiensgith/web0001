@@ -59,7 +59,9 @@
             let app = this;
             let id = app.$route.params.id;
             app.userId = id;
-            axios.get('/api/v1/users/' + id)
+            axios.get('/api/v1/users/' + id,{
+                headers: app.$bearerAPITOKEN
+            })
                 .then(function (resp) {
                     app.user = resp.data.user;
                     app.userrole = resp.data.role;
@@ -90,7 +92,9 @@
                 var app = this;
                 var newUser = app.user;
                 newUser.role = app.userrole;
-                axios.patch('/api/v1/users/' + app.userId, newUser)
+                axios.patch('/api/v1/users/' + app.userId, newUser,{
+                headers: app.$bearerAPITOKEN
+            })
                     .then(function (resp) {
                         app.$router.replace('/');
                     })

@@ -135,7 +135,9 @@ import 'vue-loading-overlay/dist/vue-loading.css'
                         newPlant.plant_image = this.$refs.myVueDropzone.getAcceptedFiles();
                     }
                     else newPlant.plant_image = 0;
-                    axios.patch('/api/v1/plants/' + app.plantId, newPlant)
+                    axios.patch('/api/v1/plants/' + app.plantId, newPlant,{
+                headers: app.$bearerAPITOKEN
+            })
                         .then(function (resp) {
                             app.isLoading = false;
                             app.$router.replace('/');

@@ -6,6 +6,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="api-token" content="{{ Auth::check() ? Auth::user()->api_token : '' }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -36,6 +37,8 @@
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="{{route('admin.index')}}">Dashboard</a>
         <a href="{{route('admin.users.index')}}">Users</a>
+        <a href="{{route('admin.roles.index')}}">Roles</a>
+        <a href="{{route('admin.permissions.index')}}">Permissions</a>
         <a href="{{route('admin.categories.index')}}">Categories</a>
         <a href="{{route('admin.plants.index')}}">Plants</a>
 

@@ -49,7 +49,9 @@
         },
         mounted() {
             var app = this;
-            axios.get('/api/v1/plants')
+            axios.get('/api/v1/plants',{
+                headers: app.$bearerAPITOKEN
+            })
                 .then(function (resp) {
                     app.plants = resp.data;
                 })
@@ -62,7 +64,9 @@
             deleteEntry(id, index) {
                 if (confirm("Do you really want to delete it?")) {
                     var app = this;
-                    axios.delete('/api/v1/plants/' + id)
+                    axios.delete('/api/v1/plants/' + id,{
+                headers: app.$bearerAPITOKEN
+            })
                         .then(function (resp) {
                             app.plants.splice(index, 1);
                         })

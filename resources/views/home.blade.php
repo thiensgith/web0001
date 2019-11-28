@@ -39,6 +39,7 @@ Home
             <div class="col-md-10">
                 <div id="bg">
                     <div id="title-container">
+                        {{-- {{dd(Auth::user()->rolePermission())}} --}}
                         {{-- <div id="title-bg"></div> --}}
                         <div id="title">
                         <h1 class="mt-5">Miaogo</h1>

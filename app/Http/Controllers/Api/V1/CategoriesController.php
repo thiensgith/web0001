@@ -9,7 +9,10 @@ use App\Category;
 
 class CategoriesController extends Controller
 {
-
+    function __construct()
+    {
+       //$this->middleware('permission:1')->only('index');
+    }
     const DRIVE_CONFIG_URL = ' https://docs.google.com/uc?id=';
     /**
      * Display a listing of the resource.
@@ -18,6 +21,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
+        $this->middleware('permission:1');
         $categories = Category::all();
         
         foreach ($categories as $category) {

@@ -103,7 +103,9 @@ import 'vue-loading-overlay/dist/vue-loading.css'
                     app.isLoading = true;
                     var newCategory = app.category;
                     newCategory.category_image = this.$refs.myVueDropzone.getAcceptedFiles();
-                    axios.post('/api/v1/categories', newCategory)
+                    axios.post('/api/v1/categories', newCategory,{
+                headers: app.$bearerAPITOKEN
+            })
                         .then(function (resp) {
                             app.isLoading = false;
                             app.$router.push({path: '/'});

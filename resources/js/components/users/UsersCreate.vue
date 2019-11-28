@@ -60,7 +60,9 @@
                 event.preventDefault();
                 var app = this;
                 var newUser = app.user;
-                axios.post('/api/v1/users', newUser)
+                axios.post('/api/v1/users', newUser,{
+                headers: app.$bearerAPITOKEN
+            })
                     .then(function (resp) {
                         app.$router.push({path: '/'});
                     })

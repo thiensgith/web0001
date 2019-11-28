@@ -86,7 +86,9 @@ import 'vue-loading-overlay/dist/vue-loading.css'
         },
         mounted() {
             var app = this;
-            axios.get('/api/v1/categories')
+            axios.get('/api/v1/categories',{
+                headers: app.$bearerAPITOKEN
+            })
                 .then(function (resp) {
                     app.categories = resp.data;
                 })
@@ -124,7 +126,9 @@ import 'vue-loading-overlay/dist/vue-loading.css'
                     app.isLoading = true;
                     var newPlant = app.plant;
                     newPlant.plant_image = this.$refs.myVueDropzone.getAcceptedFiles();
-                    axios.post('/api/v1/plants', newPlant)
+                    axios.post('/api/v1/plants', newPlant,{
+                headers: app.$bearerAPITOKEN
+            })
                         .then(function (resp) {
                             app.isLoading = false;
                             app.$router.push({path: '/'});

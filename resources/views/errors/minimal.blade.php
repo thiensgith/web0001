@@ -42,6 +42,13 @@
                 text-align: center;
             }
 
+            .next {
+                border-left: 2px solid;
+                font-size: 26px;
+                padding: 0 15px 0 15px;
+                text-align: center;
+            }
+
             .message {
                 font-size: 18px;
                 text-align: center;
@@ -56,6 +63,20 @@
 
             <div class="message" style="padding: 10px;">
                 @yield('message')
+            </div>
+
+            <div class="next">
+                <a style="text-decoration: none; color: green" href="{{ url()->previous() }}"> Back
+                </a>/
+                <a style="text-decoration: none; color: orange" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
         </div>
     </body>

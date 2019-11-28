@@ -90,7 +90,7 @@
                                 <a class="nav-link px-3 rounded-pill" href="{{route('categories')}}">PRODUCTS</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-3 rounded-pill" href="#">INSPIRATION</a>
+                                <a class="nav-link px-3 rounded-pill" href="https://github.com/thiensgith/web0001">GITHUB</a>
                             </li>
                         </ul>
                         <ul class="navbar-nav navbar-dark    ml-auto">

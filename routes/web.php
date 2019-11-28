@@ -21,11 +21,13 @@ Auth::routes();
 	admin/users/
 	admin/plants/
  */
-Route::group(['prefix' => 'admin','middleware' => 'role:admin', 'as' => 'admin.'], function () {
+Route::group(['prefix' => 'admin','middleware' => ['auth','role:admin'], 'as' => 'admin.'], function () {
 	Route::get('/', 'AdminController@index')->name('index');
     Route::get('/dashboard', 'AdminController@index')->name('index');
     Route::get('/categories', 'AdminController@category')->name('categories.index');
     Route::get('/users', 'AdminController@user')->name('users.index');
+    Route::get('/roles', 'AdminController@role')->name('roles.index');
+    Route::get('/permissions', 'AdminController@permission')->name('permissions.index');
     Route::get('/plants', 'AdminController@plant')->name('plants.index');
 });
 /*
@@ -45,6 +47,7 @@ Route::group(['prefix' => 'user','middleware' => 'auth'], function () {
 	/{category_slug}/{plant_slug}
  */
 Route::get('/', 'HomeController@index')->name('home');
+//Route::get('/controllers', 'HomeController@controllers')->name('home');
 Route::get('/categories', 'CoreController@categories')->name('categories');
 Route::get('/{category_slug}', 'CoreController@plants');
 Route::get('/{category_slug}/{plant_slug}', 'CoreController@detail_plant');

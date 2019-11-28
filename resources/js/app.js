@@ -35,6 +35,14 @@ import UsersIndex from './components/users/UsersIndex.vue';
 import UsersCreate from './components/users/UsersCreate.vue';
 import UsersEdit from './components/users/UsersEdit.vue';
 
+import RolesIndex from './components/roles/RolesIndex.vue';
+import RolesCreate from './components/roles/RolesCreate.vue';
+import RolesEdit from './components/roles/RolesEdit.vue';
+
+import PermissionsIndex from './components/permissions/PermissionsIndex.vue';
+import PermissionsCreate from './components/permissions/PermissionsCreate.vue';
+import PermissionsEdit from './components/permissions/PermissionsEdit.vue';
+
 import CategoriesIndex from './components/categories/CategoriesIndex.vue';
 import CategoriesCreate from './components/categories/CategoriesCreate.vue';
 import CategoriesEdit from './components/categories/CategoriesEdit.vue';
@@ -51,11 +59,19 @@ const routes = [
             categoriesIndex: CategoriesIndex,
             plantsIndex: PlantsIndex,
             dashboardIndex: DashboardIndex,
+            rolesIndex: RolesIndex,
+            permissionsIndex: PermissionsIndex,
         }
     },
 
     {path: '/create-user', component: UsersCreate, name: 'createUser'},
     {path: '/edit-user/:id', component: UsersEdit, name: 'editUser'},
+
+    {path: '/create-role', component: RolesCreate, name: 'createRole'},
+    {path: '/edit-role/:id', component: RolesEdit, name: 'editRole'},
+
+    {path: '/create-permission', component: PermissionsCreate, name: 'createPermission'},
+    {path: '/edit-permission/:id', component: PermissionsEdit, name: 'editPermission'},
 
     {path: '/create-category', component: CategoriesCreate, name: 'createCategory'},
     {path: '/edit-category/:id', component: CategoriesEdit, name: 'editCategory'},
@@ -63,6 +79,11 @@ const routes = [
     {path: '/create-plant', component: PlantsCreate, name: 'createPlant'},
     {path: '/edit-plant/:id', component: PlantsEdit, name: 'editPlant'},
 ]
+//GLOBAL DATA
+Vue.prototype.$bearerAPITOKEN = {
+                'Accept' : 'application/json',
+                'Authorization' : 'Bearer ' + document.querySelector("meta[name='api-token']").getAttribute('content'),
+                }
 const router = new VueRouter({
 	routes,
 })

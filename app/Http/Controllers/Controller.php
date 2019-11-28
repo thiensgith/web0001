@@ -120,4 +120,5 @@ class Controller extends BaseController
         // Storage::disk('local')->put('public/'.$path.'/sm_'.$imageName.'.jpg', $small);
         
     }
+
 }

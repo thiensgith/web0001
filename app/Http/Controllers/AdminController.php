@@ -13,7 +13,7 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth','role:admin']);
     }
 
     /**
@@ -34,6 +34,16 @@ class AdminController extends Controller
     public function user()
     {
         return view('user.admin.users.index');
+    }
+
+    public function role()
+    {
+        return view('user.admin.roles.index');
+    }
+
+    public function permission()
+    {
+        return view('user.admin.permissions.index');
     }
 
     public function plant()
