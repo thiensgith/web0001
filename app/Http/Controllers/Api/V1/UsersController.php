@@ -16,7 +16,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return User::all();
+        $users = User::all()->load('permissions');
+        // chen permission vao day
+        return $users;
     }
 
     /**
@@ -42,11 +44,13 @@ class UsersController extends Controller
             'lname' => $request->lname,
             'gender' => $request->gender,
             'email' => $request->email,
+            'isAdmin' => $request->isAdmin,
             'password' => Hash::make(1),
         ]);
-
-        //default users have a basic role
-        $user->roles()->attach(\App\Role::where('name', 'basic')->first());
+        if ($request->admin) $request->permissions->append(['id' => 1]);
+        //if ($request->permissions != null) 
+        $user->permissions()->sync($request->permissions);
+        
         return $user;
     }
 
@@ -59,12 +63,10 @@ class UsersController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        $role = User::find($id)->roles()->first();
-        return [
-            'user' => $user,
-            'role' => $role->name,
-            'roles' => \App\Role::all()
-            ];
+        $permissions = $user->permissions->pluck('id')->toArray();
+        $user = $user->toArray();
+        $user['permissions'] = $permissions;
+        return $user;
     }
 
     /**
@@ -93,13 +95,15 @@ class UsersController extends Controller
             'lname' => $request->lname,
             'gender' => $request->gender,
             'email' => $request->email,
+            'isAdmin' => $request->isAdmin,
         ];
         if($request->resetpassword) 
             array_push($data, ['password' => Hash::make(1)]);
         $user->update($data);
         //Update role
-        $user->roles()->sync(\App\Role::where('name', $request->role)->first());
-        return $request->role;
+        //if ($request->permissions != null)
+        $user->permissions()->sync($request->permissions);
+        return $user;
     }
 
     /**
@@ -111,7 +115,7 @@ class UsersController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        $user->roles()->detach();
+        $user->permissions()->detach();
         $user->delete();
         return '';
     }

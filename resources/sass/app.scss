@@ -13,6 +13,8 @@
 // Sidenav
 @import 'sidenav';
 
+@import 'utilities';
+
 .navbar-laravel {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -32,10 +34,13 @@ select:focus, select:active{
 // Dropzone Override
 .dropzone {
 	background-image: url('/assets/images/default/dropzone.gif') !important;
-  background-size: 100% 100% !important;
+  background-size: auto 100% !important;
+  text-align: center !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
 }
 .dropzone .dz-message {
-	color: $light !important;
+	color: $dark !important;
 }
 .dropzone .dz-details {
 	background: $light !important;
@@ -99,3 +104,15 @@ select:focus, select:active{
 .outer-card > .card-header{
   background-color: $white !important;
 }
+
+.zoom {
+  transition: transform .2s; /* Animation */
+
+}
+
+.zoom:hover {
+  transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+
+

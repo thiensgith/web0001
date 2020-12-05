@@ -23,23 +23,14 @@ Route::group(['middleware' => 'auth:api'], function() {
 		'namespace' => 'Api\V1',
 		'as' => 'api.',
 	], function () {
-		Route::resource('categories', 'CategoriesController', ['except' => ['create', 'edit']]);
-		Route::resource('users', 'UsersController', ['except' => ['create', 'edit']]);
-		Route::resource('plants', 'PlantsController', ['except' => ['create', 'edit']]);
-		Route::resource('roles', 'RolesController', ['except' => ['create', 'edit']]);
-		Route::resource('permissions', 'PermissionsController', ['except' => ['create', 'edit']]);
-		Route::group([
-			'prefix' => 'admin',
-			/*'middleware' => 'apirole:admin',*/
-
-		], function() {
-		    Route::post('attachpermission', 'AdminManagerController@attachPermission');
-		    Route::post('syncpermission', 'AdminManagerController@syncPermission');
-		    Route::post('detachpermission', 'AdminManagerController@detachPermission');
-		    Route::post('attachrole', 'AdminManagerController@attachRole');
-		    Route::post('syncrole', 'AdminManagerController@syncRole');
-		    Route::post('detachrole', 'AdminManagerController@detachRole');
-		});
+		Route::resource('categories', 'CategoriesController', ['except' => ['create', 'edit']])
+			->middleware('permission:'.config('permission.api.CategoriesController'));
+		Route::resource('users', 'UsersController', ['except' => ['create', 'edit']])
+			->middleware('permission:'.config('permission.api.UsersController'));
+		Route::resource('plants', 'PlantsController', ['except' => ['create', 'edit']])
+			->middleware('permission:'.config('permission.api.PlantsController'));
+		Route::resource('permissions', 'PermissionsController', ['except' => ['create', 'edit']])
+			->middleware('permission:'.config('permission.api.PermissionsController'));
 	}
 	);
 });

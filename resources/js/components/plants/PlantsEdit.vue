@@ -27,13 +27,17 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-9 form-group card border-0">
-                        <label class="control-label">Plant image</label>
-                        <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions" class="rounded"></vue-dropzone>
-                    </div>
-                    <div class="col-sm-3 form-group card border-0">
-                        <label class="control-label font-weight-bold">Current plant photos</label>
-                        <img :src="plant.plant_image" class="img-fluid" :alt="plant.plant_name">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-9 form-group card border-0 bg-transparent">
+                                <label class="control-label">Plant image</label>
+                                <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions" class="rounded"></vue-dropzone>
+                            </div>
+                            <div class="col-sm-3 form-group card border-0 bg-transparent">
+                                <label class="control-label font-weight-bold text-center">Current plant photos</label>
+                                <img :src="plant.plant_image" class="mx-auto" :alt="plant.plant_name">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -63,14 +67,18 @@ import 'vue-loading-overlay/dist/vue-loading.css'
             let app = this;
             let id = app.$route.params.id;
             app.plantId = id;
-            axios.get('/api/v1/plants/' + id)
+            axios.get('/api/v1/plants/' + id,{
+                headers: app.$bearerAPITOKEN
+            })
                 .then(function (resp) {
                     app.plant = resp.data;
                 })
                 .catch(function () {
                     alert("Could not load your plant")
                 });
-            axios.get('/api/v1/categories')
+            axios.get('/api/v1/categories',{
+                headers: app.$bearerAPITOKEN
+            })
                 .then(function (resp) {
                     app.categories = resp.data;
                 })
@@ -87,7 +95,8 @@ import 'vue-loading-overlay/dist/vue-loading.css'
                     parallelUploads: 1,
                     maxFiles:1,
                     addRemoveLinks: true,
-                    dictDefaultMessage: 'Drop files here to change plant image',
+                    dictDefaultMessage: "",
+                    dictRemoveFile: "Xóa hok?",
                     acceptedFiles: ".jpeg,.jpg,.png,",
                     init: function() {
                         this.on("maxfilesexceeded", function(file) {

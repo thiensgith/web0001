@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 //use App\Components\GoogleClient;
 use App\Category;
-use App\Components\Helper\ImageProcessing;
 
 class Controller extends BaseController
 {
@@ -25,9 +24,10 @@ class Controller extends BaseController
     'y'=>'ý|ỳ|ỷ|ỹ|ỵ|Ý|Ỳ|Ỷ|Ỹ|Ỵ',
     );
     //protected $client;
-    public $imgProcess;
+    //public $imgProcess = new ImageProcessing();
+    
     public function __construct(/*GoogleClient $client*/){
-        $this->imgProcess = new ImageProcessing();
+        //$this->imgProcess = "ok";//new ImageProcessing();
         //$this->client = $client->getClient();
 
         $categories = new Category;

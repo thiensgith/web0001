@@ -10,24 +10,25 @@
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
-                    <th>Permission</th>
-                    <th>Role</th>
+                    <th>Display name</th>
+                    <th>Name</th>
+                    <th>Description</th>
                     <th width="100">&nbsp;</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="permission, index in permissions">
-                    <td>{{permission.permission_name}}</td>
-                    <td>{{ permission.role.name }}</td>
+                    <td>{{permission.display_name}}</td>
+                    <td>{{permission.name}}</td>
+                    <td>{{ permission.desc}}</td>
                     <td>
-                        <router-link :to="{name: 'editPermission', params: {id: permission.id}}" class="btn btn-sm btn-block btn-outline-dark m-1">
-                            Edit
-                        </router-link>
-                        <a href="#"
-                           class="btn btn-sm btn-block btn-danger m-1"
-                           v-on:click="deleteEntry(permission.id, index)">
-                            Delete
-                        </a>
+                        <div v-if="permission.id != 1">
+                            <button :disabled="permission.id == 2" 
+                               class="btn btn-sm btn-block btn-danger m-1"
+                               v-on:click="deleteEntry(permission.id, index)">
+                                Delete
+                            </button>
+                        </div>
                     </td>
                 </tr>
                 </tbody>

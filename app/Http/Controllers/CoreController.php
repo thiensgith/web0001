@@ -7,13 +7,20 @@ use Illuminate\Http\Request;
 use App\Category;
 use Illuminate\Support\Collection;
 use App\Plant;
+use App\Components\Helper\ImageProcessing;
 
 class CoreController extends Controller
 {
+    private $imgProcess;
+
+    function __construct()
+    {
+        $this->imgProcess = new ImageProcessing();
+    }
 
     public function categories()
     {
-        $categories = Category::all();
+        $categories = Category::where('category_visible',1)->get();
         foreach ($categories as $category) {
             $category['category_image'] = $this->imgProcess->getURL($category['category_image'],'sm');
         }

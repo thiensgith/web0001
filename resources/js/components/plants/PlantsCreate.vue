@@ -62,6 +62,8 @@ import 'vue-loading-overlay/dist/vue-loading.css'
                     parallelUploads: 1,
                     maxFiles:1,
                     addRemoveLinks: true,
+                    dictDefaultMessage: "",
+                    dictRemoveFile: "Xóa hok?",
                     acceptedFiles: ".jpeg,.jpg,.png,",
                     init: function() {
                         this.on("maxfilesexceeded", function(file) {

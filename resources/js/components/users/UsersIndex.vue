@@ -14,6 +14,8 @@
                     <th>Last name</th>
                     <th>Gender</th>
                     <th>Email</th>
+                    <th>Admin</th>
+                    <th>Permissions</th>
                     <th width="100">&nbsp;</th>
                 </tr>
                 </thead>
@@ -24,6 +26,13 @@
                     <td>{{ user.lname }}</td>
                     <td>{{ user.gender }}</td>
                     <td>{{ user.email }}</td>
+                    <td>
+                        <i v-if="user.isAdmin" class="fas fa-check-circle text-success"></i>
+                        <i v-if="!user.isAdmin" class="fas fa-times-circle text-danger"></i>
+                    </td>
+                    <td>
+                        <span v-for="(permission, index) in user.permissions" :class="'badge ' + color[(index + 1 > 6 ? index+1 - 6*(Math.floor((index)/6)) : index+1)] + ' mx-1'">{{permission.display_name}}</span> 
+                    </td>
                     <td>
                         <router-link :to="{name: 'editUser', params: {id: user.id}}" class="btn btn-sm btn-block btn-outline-dark m-1">
                             Edit
@@ -45,7 +54,15 @@
     export default {
         data: function () {
             return {
-                users: []
+                users: [],
+                color: {
+                    1: 'badge-color-red',
+                    2: 'badge-color-orange',
+                    3: 'badge-color-yellow',
+                    4: 'badge-color-green',
+                    5: 'badge-color-blue',
+                    6: 'badge-color-purple',
+                },
             }
         },
         mounted() {

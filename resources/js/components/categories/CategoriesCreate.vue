@@ -15,17 +15,15 @@
                     </button>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12 form-group">
-                        <label class="control-label">Category image</label>
+                    <div class="col-sm-3 form-group">
+                        <label class="control-label">Category image (upload here)</label>
                         <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions" class="rounded"></vue-dropzone>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6 form-group">
+                    <div class="col-sm-5 form-group">
                         <label class="control-label">Category name</label>
                         <input type="text" v-model="category.category_name" class="form-control">
                     </div>
-                    <div class="col-sm-6 form-group">
+                    <div class="col-sm-4 form-group">
                         <label class="control-label">Visible</label>
                         <select v-model="category.category_visible" class="form-control">
                           <option value="1">Show</option>
@@ -64,6 +62,8 @@ import 'vue-loading-overlay/dist/vue-loading.css'
                     parallelUploads: 1,
                     maxFiles:1,
                     addRemoveLinks: true,
+                    dictDefaultMessage: "",
+                    dictRemoveFile: "Xóa hok?",
                     acceptedFiles: ".jpeg,.jpg,.png,",
                     init: function() {
                         this.on("maxfilesexceeded", function(file) {

@@ -6,13 +6,16 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Collection;
 use App\Category;
+use App\Components\Helper\ImageProcessing;
 
 class CategoriesController extends Controller
 {
 
+    private $imageProcessing;
+
     function __construct()
     {
-       //$this->middleware('permission:1')->only('index');
+        $this->imageProcessing = new ImageProcessing();
     }
 
     /**
@@ -27,7 +30,7 @@ class CategoriesController extends Controller
         
         foreach ($categories as $category) {
             // $id_images = collect(json_decode($category['category_image'],true))->collapse();
-            $category['category_image'] = $this->imgProcess->getURL($category['category_image'],'sm');
+            $category['category_image'] = $this->imageProcessing->getURL($category['category_image'],'sm');
         }
         return $categories;
     }
@@ -51,11 +54,12 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         $request->merge([
-            'category_image' => $this->imgProcess->run($request->category_image[0]['dataURL'],'categories'),
-            'category_slug' => $this->sluger($request->category_name),
+           'category_image' => $this->imageProcessing->run($request->category_image[0]['dataURL'],'categories'),
+           'category_slug' => $this->sluger($request->category_name),
         ]);
         $category = Category::create($request->all());
         return $category;
+        
     }
 
     /**
@@ -67,7 +71,7 @@ class CategoriesController extends Controller
     public function show($id)
     {
         $category = Category::findOrFail($id);
-        $category['category_image'] = $this->imgProcess->getURL($category['category_image'],'sm');
+        $category['category_image'] = $this->imageProcessing->getURL($category['category_image'],'sm');
         return $category;
     }
 
@@ -96,7 +100,7 @@ class CategoriesController extends Controller
         
         if ($request->category_image) {
             $request->merge([ 
-            'category_image' => $this->imgProcess->run($request->category_image[0]['dataURL'],'categories'),
+            'category_image' => $this->imageProcessing->run($request->category_image[0]['dataURL'],'categories'),
             'category_slug' => $this->sluger($request->category_name)
         ]);
             $category->update($request->all());

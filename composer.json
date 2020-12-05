@@ -15,7 +15,7 @@
         "fzaninotto/faker": "^1.4",
         "google/apiclient": "^2.0",
         "intervention/image": "^2.5",
-        "laravel/framework": "5.8.*",
+        "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
         "nao-pon/flysystem-google-drive": "~1.1"
     },

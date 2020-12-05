@@ -9,55 +9,6 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    public function roles()
-    {
-        return $this->belongsToMany('App\Role');
-    }
-
-    /**
-    * @param string|array $roles
-    */
-    public function authorizeRoles($roles,$bool = false)
-    {
-        if (is_array($roles)) {
-            if ($bool) {
-                return $this->hasAnyRole($roles) ? true : false;
-            }
-            else 
-                return $this->hasAnyRole($roles) || 
-                    abort(401, 'This action is unauthorized.');
-        }
-        if ($bool) {
-            return $this->hasRole($roles) ? true : false;
-        }
-        else 
-            return $this->hasRole($roles) || 
-                abort(401, 'This action is unauthorized.');
-    }
-
-    
-    /**
-    * Check multiple roles
-    * @param array $roles
-    */
-    public function hasAnyRole($roles)
-    {
-        return $this->roles()->whereIn('name', $roles)->exists();
-    }
-
-    /**
-    * Check one role
-    * @param string $role
-    */
-    public function hasRole($role)
-    {
-        return $this->roles()->where('name', $role)->exists();
-    }
-
-    public function rolePermission()
-    {
-        return $this->hasOneThrough('App\Permission','App\Role');
-    }
 
     /**
      *  Generate Api_Token 
@@ -69,14 +20,38 @@ class User extends Authenticatable
 
         return $this->api_token;
     }
+
+    public function permissions()
+    {
+        return $this->belongsToMany('App\Permission');
+    }
     
+    /**
+    * Check multiple roles
+    * @param array $roles
+    */
+    public function hasAnyPermission($permissions)
+    {
+        return $this->permissions()->whereIn('name', $permissions)->exists();
+    }
+
+    /**
+    * Check one role
+    * @param string $role
+    */
+    public function hasPermission($permission)
+    {
+        return $this->permissions()->where('name', $permission)->exists();
+    }
+
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'fname', 'lname', 'gender', 'email', 'password', 'avatar', 'api_token',
+        'fname', 'lname', 'gender', 'email', 'password', 'avatar', 'api_token', 'isAdmin'
     ];
 
     /**

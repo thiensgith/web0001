@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'mode' => [
+    'resolution' => [
     	0 => [
     		'key' => 'bg',
     		'x' => 640,

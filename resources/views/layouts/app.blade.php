@@ -32,18 +32,18 @@
 <body>
     @guest
     @else
-    @if (Auth::user()->roles()->where('name', 'admin')->count())
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="{{route('admin.index')}}">Dashboard</a>
+        @if (Auth::user()->hasPermission('superadmin'))
         <a href="{{route('admin.users.index')}}">Users</a>
-        <a href="{{route('admin.roles.index')}}">Roles</a>
         <a href="{{route('admin.permissions.index')}}">Permissions</a>
+        @endif
+        @if (Auth::user()->hasAnyPermission(['productmanagement','superadmin']))
         <a href="{{route('admin.categories.index')}}">Categories</a>
         <a href="{{route('admin.plants.index')}}">Plants</a>
-
+        @endif
     </div>
-    @endif
     @endguest
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
@@ -103,17 +103,17 @@
         <main class="pb-4">
             @yield('content')
         </main>
+        <footer class="bd-footer text-muted">
+            <div class="container-fluid p-3 p-md-5">
+                <ul class="bd-footer-links">
+                <li><a href="https://github.com/thiensgith/web0001">GitHub</a></li>
+                <li><a href="https://www.facebook.com/borntodiee">A Cute Cat</a></li>
+                <li><a href="#">About</a></li>
+                </ul>
+                <p>Designed and built with all the love of <a href="https://www.facebook.com/borntodiee">A Cute Cat</a> with the help of <a href="#">open source</a>.</p>
+            </div>
+        </footer>
     </div>
-    <footer class="bd-footer text-muted">
-        <div class="container-fluid p-3 p-md-5">
-            <ul class="bd-footer-links">
-            <li><a href="https://github.com/thiensgith/web0001">GitHub</a></li>
-            <li><a href="https://www.facebook.com/borntodiee">A Cute Cat</a></li>
-            <li><a href="#">About</a></li>
-            </ul>
-            <p>Designed and built with all the love of <a href="https://www.facebook.com/borntodiee">A Cute Cat</a> with the help of <a href="#">open source</a>.</p>
-        </div>
-    </footer>
     @yield('script')
     <script type="text/javascript">
         /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */

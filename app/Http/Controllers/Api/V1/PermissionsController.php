@@ -38,12 +38,12 @@ class PermissionsController extends Controller
      */
     public function store(Request $request)
     {
-        foreach (config('permission.api') as $list) {
-            Permission::create($list);
-        }
-        // $permission = Permission::create($request->all());
-
-        return config('permission.api');
+        // foreach (config('permission.api') as $list) {
+        //     Permission::create($list);
+        // }
+        $permission = Permission::create($request->all());
+        return $permission;
+        //return config('permission.api');
     }
 
     /**
@@ -93,6 +93,7 @@ class PermissionsController extends Controller
     public function destroy($id)
     {
         $permission = Permission::findOrFail($id);
+        $permission->users()->detach();
         $permission->delete();
         return '';
     }

@@ -21,14 +21,26 @@ Auth::routes();
 	admin/users/
 	admin/plants/
  */
-Route::group(['prefix' => 'admin','middleware' => ['auth','role:admin'], 'as' => 'admin.'], function () {
-	Route::get('/', 'AdminController@index')->name('index');
-    Route::get('/dashboard', 'AdminController@index')->name('index');
-    Route::get('/categories', 'AdminController@category')->name('categories.index');
-    Route::get('/users', 'AdminController@user')->name('users.index');
-    Route::get('/roles', 'AdminController@role')->name('roles.index');
-    Route::get('/permissions', 'AdminController@permission')->name('permissions.index');
-    Route::get('/plants', 'AdminController@plant')->name('plants.index');
+Route::group(['prefix' => 'admin','middleware' => ['auth'], 'as' => 'admin.'], function () {
+
+	Route::get('/', 'AdminController@index')->name('index')
+		->middleware('permission:'.config('permission.web.AdminController@index'));
+
+    Route::get('/dashboard', 'AdminController@index')->name('index')
+    	->middleware('permission:'.config('permission.web.AdminController@index'));
+
+	Route::get('/categories', 'AdminController@category')->name('categories.index')
+		->middleware('permission:'.config('permission.web.AdminController@category'));
+
+	Route::get('/plants', 'AdminController@plant')->name('plants.index')
+		->middleware('permission:'.config('permission.web.AdminController@plant'));
+
+	Route::get('/users', 'AdminController@user')->name('users.index')
+		->middleware('permission:'.config('permission.web.AdminController@user'));
+
+    Route::get('/permissions', 'AdminController@permission')->name('permissions.index')
+    	->middleware('permission:'.config('permission.web.AdminController@permission'));
+    
 });
 /*
 	user/

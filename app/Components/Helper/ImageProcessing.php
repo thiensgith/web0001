@@ -32,9 +32,9 @@ class ImageProcessing
 	{
 		$name = $this->createName($key);
 		$format = $this->config['format'];
-		$mode = $this->config['mode'];
+		$resolution = $this->config['resolution'];
 		$location = $this->config['storage_location'];
-		foreach ($mode as $value) {
+		foreach ($resolution as $value) {
 			$image = $this->createImage($img,$format,$value['x'], $value['y']);
 			switch ($location) {
 				case 'local':
